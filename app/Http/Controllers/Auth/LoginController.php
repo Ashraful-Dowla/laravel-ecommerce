@@ -40,6 +40,13 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
+    //admin login
+    public function adminLogin()
+    {
+        return view('auth.admin_login');
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -57,4 +64,5 @@ class LoginController extends Controller
 
         return redirect()->back()->with('error', 'Invalid email or password');
     }
+
 }

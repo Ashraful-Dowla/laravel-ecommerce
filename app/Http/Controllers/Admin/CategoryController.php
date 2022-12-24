@@ -34,12 +34,16 @@ class CategoryController extends Controller
 
         // DB::table('categories')->insert([
         //     'category_name' => $request->category_name,
-        //     'category_slug' => $request->category_slug
+        //     'category_slug' => $request->category_slug,
+        //     'created_at' => now(),
+        //     'updated_at' => now(),
         // ]);
 
         Category::insert([
             'category_name' => $request->category_name,
             'category_slug' => $request->category_slug,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         $notification = array('message' => 'Category Inserted', 'alert_type' => 'success');
@@ -66,11 +70,13 @@ class CategoryController extends Controller
         // DB::table('categories')->where('id', $request->id)->update([
         //     'category_name' => $request->category_name,
         //     'category_slug' => $request->category_slug,
+        //     'updated_at' => now(),
         // ]);
 
         Category::where('id', $request->id)->update([
             'category_name' => $request->category_name,
             'category_slug' => $request->category_slug,
+            'updated_at' => now(),
         ]);
 
         $notification = array('message' => 'Category Updated', 'alert_type' => 'success');

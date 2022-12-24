@@ -26,6 +26,7 @@
         href="{{ asset('public/backend') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet"
         href="{{ asset('public/backend') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    @stack('css')
 </head>
 
 <body>
@@ -99,6 +100,10 @@
     <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ asset('public/backend') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"
+    integrity="sha512-KBeR1NhClUySj9xBB0+KRqYLPkM6VvXiiWaSz/8LCQNdRpUm38SWUrj0ccNDNSkwCD9qPA4KobLliG26yPppJA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @stack('script')
     <script>
         $(function() {
             $("#example1").DataTable({
@@ -119,8 +124,6 @@
         });
     </script>
     <!-- AdminLTE App -->
-
-
 
     <!-- Anything delete-->
     <script>

@@ -31,7 +31,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="example1" class="table table-bordered table-striped table-sm">
                                     <thead>
                                         <tr>
                                             <th>SL</th>
@@ -47,8 +47,15 @@
                                                 <td>{{ $row->category_name }}</td>
                                                 <td>{{ $row->category_slug }}</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-info btn-sm">e</a>
-                                                    <a href="#" class="btn btn-danger btn-sm">d</a>
+                                                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#editCategoryModal"
+                                                        onclick="getCategoryDataById(`{{ $row->id }}`)">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <a href="{{ route('category.delete', $row->id) }}"
+                                                        class="btn btn-danger btn-sm" id="delete">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -86,14 +93,89 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Submit</button>
-                </div>
+                <form action={{ route('category.store') }} method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="category_name">Category Name</label>
+                            <input type="text" class="form-control" id="category_name" name="category_name"
+                                value="{{ old('category_name') }}" required>
+                        </div>
+                        @error('category_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        @error('category_slug')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>category name already exists</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
+    {{-- category edit model --}}
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="categoryModal">Edit Category</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action={{ route('category.update') }} method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="category_name">Category Name</label>
+                            <input type="hidden" class="form-control" id="e_category_id" name="id">
+                            <input type="text" class="form-control" id="e_category_name" name="category_name"
+                                value="{{ old('category_name') }}" required>
+                        </div>
+                        @error('category_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        @error('category_slug')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>category name already exists</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- script -->
+    @push('script')
+        <script>
+            function getCategoryDataById(id) {
+                let url = "{{ route('category.edit', ':id') }}";
+                url = url.replace(':id', id);
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#e_category_id").val(data.id);
+                        $("#e_category_name").val(data.category_name);
+                    }
+                });
+            }
+        </script>
+    @endpush
 @endsection

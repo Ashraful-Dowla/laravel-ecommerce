@@ -161,7 +161,6 @@
     @push('script')
         <script>
             function getSubCategoryDataById(id) {
-                console.log(id);
                 let url = "{{ route('subcategory.edit', ':id') }}";
                 url = url.replace(':id', id);
                 $.ajax({

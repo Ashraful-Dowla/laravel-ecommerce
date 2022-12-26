@@ -50,4 +50,13 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update/{id}', 'BrandController@update')->name('brand.update');
     });
 
+    //setting
+    Route::group(['prefix' => 'setting'], function () {
+
+        //seo
+        Route::group(['prefix' => 'seo'], function () {
+            Route::get('/', 'SettingController@seo')->name('seo.setting');
+            Route::post('/update/{id}', 'SettingController@seoUpdate')->name('seo.setting.update');
+        });
+    });
 });

@@ -38,4 +38,14 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update', 'ChildcategoryController@update')->name('childcategory.update');
     });
 
+    //brand
+    Route::group(['prefix' => 'brand'], function () {
+        Route::get('/', 'BrandController@index')->name('brand.index');
+        Route::get('/list', 'BrandController@list')->name('brand.list');
+        Route::post('/store', 'BrandController@store')->name('brand.store');
+        Route::get('/delete/{id}', 'BrandController@destroy')->name('brand.delete');
+        Route::get('/edit/{id}', 'BrandController@edit')->name('brand.edit');
+        Route::post('/update/{id}', 'BrandController@update')->name('brand.update');
+    });
+
 });

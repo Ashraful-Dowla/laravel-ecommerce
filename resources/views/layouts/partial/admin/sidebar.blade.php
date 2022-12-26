@@ -82,6 +82,12 @@
                 </li>
                 <li class="nav-header">PROFILE</li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.password.change') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p class="text">Password Change</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.logout') }}" class="nav-link">
                         <i class="nav-icon far fa-circle text-danger"></i>
                         <p class="text">Logout</p>

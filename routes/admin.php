@@ -81,4 +81,14 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
             Route::post('/update/{id}', 'PageController@update')->name('page.update');
         });
     });
+
+    ///warehouse
+    Route::group(['prefix' => 'warehouse'], function () {
+        Route::get('/', 'WarehouseController@index')->name('warehouse.index');
+        Route::get('/list', 'WarehouseController@list')->name('warehouse.list');
+        Route::post('/store', 'WarehouseController@store')->name('warehouse.store');
+        Route::get('/delete/{id}', 'WarehouseController@destroy')->name('warehouse.delete');
+        Route::get('/edit/{id}', 'WarehouseController@edit')->name('warehouse.edit');
+        Route::post('/update/{id}', 'WarehouseController@update')->name('warehouse.update');
+    });
 });

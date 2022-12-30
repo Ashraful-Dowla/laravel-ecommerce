@@ -28,7 +28,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update', 'SubcategoryController@update')->name('subcategory.update');
     });
 
-    //child category
+    //childcategory
     Route::group(['prefix' => 'childcategory'], function () {
         Route::get('/', 'ChildcategoryController@index')->name('childcategory.index');
         Route::get('/list', 'ChildcategoryController@list')->name('childcategory.list');
@@ -48,6 +48,26 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::get('/delete/{id}', 'BrandController@destroy')->name('brand.delete');
         Route::get('/edit/{id}', 'BrandController@edit')->name('brand.edit');
         Route::post('/update/{id}', 'BrandController@update')->name('brand.update');
+    });
+
+    ///warehouse
+    Route::group(['prefix' => 'warehouse'], function () {
+        Route::get('/', 'WarehouseController@index')->name('warehouse.index');
+        Route::get('/list', 'WarehouseController@list')->name('warehouse.list');
+        Route::post('/store', 'WarehouseController@store')->name('warehouse.store');
+        Route::get('/delete/{id}', 'WarehouseController@destroy')->name('warehouse.delete');
+        Route::get('/edit/{id}', 'WarehouseController@edit')->name('warehouse.edit');
+        Route::post('/update/{id}', 'WarehouseController@update')->name('warehouse.update');
+    });
+
+    //coupon
+    Route::group(['prefix' => 'coupon'], function () {
+        Route::get('/', 'CouponController@index')->name('coupon.index');
+        Route::get('/list', 'CouponController@list')->name('coupon.list');
+        Route::post('/store', 'CouponController@store')->name('coupon.store');
+        Route::delete('/delete/{id}', 'CouponController@destroy')->name('coupon.delete');
+        Route::get('/edit/{id}', 'CouponController@edit')->name('coupon.edit');
+        Route::post('/update/{id}', 'CouponController@update')->name('coupon.update');
     });
 
     //setting
@@ -80,15 +100,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
             Route::get('/edit/{id}', 'PageController@edit')->name('page.edit');
             Route::post('/update/{id}', 'PageController@update')->name('page.update');
         });
-    });
-
-    ///warehouse
-    Route::group(['prefix' => 'warehouse'], function () {
-        Route::get('/', 'WarehouseController@index')->name('warehouse.index');
-        Route::get('/list', 'WarehouseController@list')->name('warehouse.list');
-        Route::post('/store', 'WarehouseController@store')->name('warehouse.store');
-        Route::get('/delete/{id}', 'WarehouseController@destroy')->name('warehouse.delete');
-        Route::get('/edit/{id}', 'WarehouseController@edit')->name('warehouse.edit');
-        Route::post('/update/{id}', 'WarehouseController@update')->name('warehouse.update');
     });
 });

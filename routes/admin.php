@@ -35,6 +35,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/store', 'ChildcategoryController@store')->name('childcategory.store');
         Route::get('/subcategory/{id}', 'ChildcategoryController@getSubcategoryByCategoryId')
             ->name('childcategory.getSubcategoryByCategoryId');
+        Route::get('/childcategory/{id}', 'ChildcategoryController@getChildCategoryBySubCategoryId')
+            ->name('childcategory.getChildCategoryBySubCategoryId');
         Route::get('/delete/{id}', 'ChildcategoryController@destroy')->name('childcategory.delete');
         Route::get('/edit/{id}', 'ChildcategoryController@edit')->name('childcategory.edit');
         Route::post('/update', 'ChildcategoryController@update')->name('childcategory.update');
@@ -50,7 +52,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update/{id}', 'BrandController@update')->name('brand.update');
     });
 
-    ///warehouse
+    //warehouse
     Route::group(['prefix' => 'warehouse'], function () {
         Route::get('/', 'WarehouseController@index')->name('warehouse.index');
         Route::get('/list', 'WarehouseController@list')->name('warehouse.list');
@@ -58,6 +60,18 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::get('/delete/{id}', 'WarehouseController@destroy')->name('warehouse.delete');
         Route::get('/edit/{id}', 'WarehouseController@edit')->name('warehouse.edit');
         Route::post('/update/{id}', 'WarehouseController@update')->name('warehouse.update');
+    });
+
+    //product
+    Route::group(['prefix' => 'product'], function () {
+        Route::get('/', 'ProductController@index')->name('product.index');
+        Route::get('/list', 'ProductController@list')->name('product.list');
+        Route::get('/create', 'ProductController@create')->name('product.create');
+        Route::post('/store', 'ProductController@store')->name('product.store');
+        Route::post('/status-change/{id}', 'ProductController@statusChange')->name('product.statusChange');
+        Route::delete('/delete/{id}', 'ProductController@destroy')->name('product.delete');
+        // Route::get('/edit/{id}', 'WarehouseController@edit')->name('warehouse.edit');
+        // Route::post('/update/{id}', 'WarehouseController@update')->name('warehouse.update');
     });
 
     //coupon

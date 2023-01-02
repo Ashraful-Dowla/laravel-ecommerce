@@ -37,7 +37,7 @@ class CreateProductsTable extends Migration
             $table->integer('product_today_deal')->nullable();
             $table->integer('product_cash_on_delivery')->nullable();
             $table->integer('flash_deal_id')->nullable();
-            $table->integer('warehouse')->nullable();
+            $table->integer('warehouse_id')->nullable();
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');

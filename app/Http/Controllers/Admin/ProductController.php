@@ -10,6 +10,7 @@ use App\Models\Subcategory;
 use Auth;
 use DataTables;
 use DB;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Image;
@@ -35,7 +36,20 @@ class ProductController extends Controller
     function list(Request $request) {
         if ($request->ajax()) {
 
-            $products = Product::latest()->get();
+            $category_id = $request->category_id;
+            $brand_id = $request->brand_id;
+            $warehouse_id = $request->warehouse_id;
+            $product_status = $request->product_status;
+
+            $products = Product::when($category_id, function ($query) use ($category_id) {
+                return $query->where('category_id', $category_id);
+            })->when($brand_id, function ($query) use ($brand_id) {
+                return $query->where('brand_id', $brand_id);
+            })->when($warehouse_id, function ($query) use ($warehouse_id) {
+                return $query->where('warehouse_id', $warehouse_id);
+            })->when($product_status != null, function ($query) use ($product_status) {
+                return $query->where('product_status', $product_status);
+            })->get();
 
             return DataTables::of($products)
                 ->addIndexColumn()
@@ -167,7 +181,20 @@ class ProductController extends Controller
     //product delete
     public function destroy($id)
     {
-        return response()->json($id);
+        $product = Product::where('id', $id)->select('product_images', 'product_thumbnail')->first();
+
+        if (File::exists($product->product_thumbnail)) {
+            File::delete($product->product_thumbnail);
+        }
+
+        foreach (json_decode($product->product_images) as $file_path) {
+            if (File::exists($file_path)) {
+                File::delete($file_path);
+            }
+        }
+
+        Product::destroy($id);
+        return response()->json('Product Deleted');
     }
 
     protected function productFileUpload($file_path, $photo, $width, $height)

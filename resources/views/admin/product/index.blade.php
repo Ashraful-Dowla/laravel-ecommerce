@@ -27,7 +27,7 @@
                                     <div class="form-group col-3">
                                         <label for="category_id">Category</label>
                                         <select name="category_id" class="form-control submitable" id="category_id">
-                                            <option selected>All</option>
+                                            <option value="{{ null }}" selected>All</option>
                                             @foreach ($categories as $row)
                                                 <option value="{{ $row->id }}">{{ $row->category_name }}</option>
                                             @endforeach
@@ -36,7 +36,7 @@
                                     <div class="form-group col-3">
                                         <label for="brand_id">Brand</label>
                                         <select name="brand_id" class="form-control submitable" id="brand_id">
-                                            <option selected>All</option>
+                                            <option value="{{ null }}" selected>All</option>
                                             @foreach ($brands as $row)
                                                 <option value="{{ $row->id }}">{{ $row->brand_name }}</option>
                                             @endforeach
@@ -45,7 +45,7 @@
                                     <div class="form-group col-3">
                                         <label for="warehouse_id">Warehouse</label>
                                         <select name="warehouse_id" class="form-control submitable" id="warehouse_id">
-                                            <option selected>All</option>
+                                            <option value="{{ null }}" selected>All</option>
                                             @foreach ($warehouses as $row)
                                                 <option value="{{ $row->id }}">{{ $row->warehouse_name }}</option>
                                             @endforeach
@@ -54,9 +54,9 @@
                                     <div class="form-group col-3">
                                         <label for="product_status">Status</label>
                                         <select name="product_status" class="form-control submitable" id="product_status">
-                                            <option selected>All</option>
+                                            <option value="{{ null }}" selected>All</option>
                                             <option value="1">Active</option>
-                                            <option value="0">Inctive</option>
+                                            <option value="0">Inactive</option>
                                         </select>
                                     </div>
                                 </div>

@@ -117,6 +117,7 @@ class ProductController extends Controller
         $request['product_status'] = $request->has('product_status') ? 1 : 0;
         $request['product_featured'] = $request->has('product_featured') ? 1 : 0;
         $request['product_today_deal'] = $request->has('product_today_deal') ? 1 : 0;
+        $request['product_slider'] = $request->has('product_slider') ? 1 : 0;
 
         $photo_product_thumbnail_path = null;
         if ($request->hasFile('product_thumbnail')) {
@@ -157,6 +158,7 @@ class ProductController extends Controller
             'product_cash_on_delivery' => $request->product_cash_on_delivery,
             'product_color' => $request->product_color,
             'product_size' => $request->product_size,
+            'product_slider' => $request->product_slider,
             'flash_deal_id' => $request->flash_deal_id,
             'warehouse_id' => $request->warehouse_id,
             'date' => date('d-m-Y'),

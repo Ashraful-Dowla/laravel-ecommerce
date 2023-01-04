@@ -39,10 +39,13 @@
                                                 <label for="meta_title">Currency </label>
                                                 <select name="currency" class="form-control">
                                                     <option value="৳"
-                                                        {{ $website_data->currency == '৳' ? 'selected' : null }}>Taka
+                                                        {{ $website_data->currency == '৳' ? 'selected' : null }}>Taka (৳)
                                                     </option>
                                                     <option value="$"
-                                                        {{ $website_data->currency == '$' ? 'selected' : null }}>USD
+                                                        {{ $website_data->currency == '$' ? 'selected' : null }}>USD ($)
+                                                    </option>
+                                                    <option value="$"
+                                                        {{ $website_data->currency == '₹' ? 'selected' : null }}>Rupee (₹)
                                                     </option>
                                                 </select>
                                             </div>

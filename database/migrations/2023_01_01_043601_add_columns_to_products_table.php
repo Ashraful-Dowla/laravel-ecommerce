@@ -15,6 +15,7 @@ class AddColumnsToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->unsignedBigInteger('pickup_point_id')->after('brand_id');
+            $table->string('product_slider')->after('product_cash_on_delivery')->nullable();
             $table->string('product_color')->after('product_cash_on_delivery')->nullable();
             $table->string('product_size')->after('product_cash_on_delivery')->nullable();
             $table->string('product_slug')->after('product_code')->nullable();
@@ -32,6 +33,7 @@ class AddColumnsToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropColumn('pickup_point_id');
+            $table->dropColumn('pickup_slider');
             $table->dropColumn('product_color');
             $table->dropColumn('product_size');
             $table->dropColumn('date');

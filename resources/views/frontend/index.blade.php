@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
+@section('navbar')
+    @include('layouts.partial.front.main_navbar')
+@endsection
+
 @section('content')
     <!-- Banner -->
-
     <div class="banner">
         <div class="banner_background"
             style="background-image:url({{ asset('public/frontend') }}/images/banner_background.jpg)"></div>

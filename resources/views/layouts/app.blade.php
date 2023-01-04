@@ -9,7 +9,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="OneTech shop project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +23,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/plugins/slick-1.8.0/slick.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/responsive.css">
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/product_styles.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/product_responsive.css">
 </head>
 
 <body>
@@ -91,7 +91,7 @@
                         <!-- Logo -->
                         <div class="col-lg-2 col-sm-3 col-3 order-1">
                             <div class="logo_container">
-                                <div class="logo"><a href="#">OneTech</a></div>
+                                <div class="logo"><a href="#">Ecom</a></div>
                             </div>
                         </div>
 
@@ -159,10 +159,7 @@
                 </div>
             </div>
 
-            @include('layouts.partial.front.main_navbar')
-
-
-
+            @yield('navbar')
         </header>
 
         @yield('content')
@@ -297,6 +294,7 @@
     <script src="{{ asset('public/frontend') }}/plugins/slick-1.8.0/slick.js"></script>
     <script src="{{ asset('public/frontend') }}/plugins/easing/easing.js"></script>
     <script src="{{ asset('public/frontend') }}/js/custom.js"></script>
+    <script src="{{ asset('public/frontend') }}/js/product_custom.js"></script>
 </body>
 
 </html>

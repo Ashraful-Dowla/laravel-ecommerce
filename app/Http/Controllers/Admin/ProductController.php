@@ -180,6 +180,25 @@ class ProductController extends Controller
         return response()->json('Product Updated');
     }
 
+    //product edit
+    public function edit($id)
+    {
+        $product = DB::table('products')->where('id', $id)->first();
+        $categories = DB::table('categories')->get();
+        $brands = DB::table('brands')->get();
+        $pickup_point = DB::table('pickup_point')->get();
+        $warehouses = DB::table('warehouses')->get();
+        $childcategories = DB::table('childcategories')->where('subcategory_id', $product->subcategory_id)->get();
+        return view('admin.product.edit', compact('product', 'categories', 'childcategories', 'brands', 'pickup_point', 'warehouses'));
+    }
+
+    //product update
+
+    public function update(Request $request, $id)
+    {
+
+    }
+
     //product delete
     public function destroy($id)
     {

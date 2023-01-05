@@ -11,14 +11,22 @@
             style="background-image:url({{ asset('public/frontend') }}/images/banner_background.jpg)"></div>
         <div class="container fill_height">
             <div class="row fill_height">
-                <div class="banner_product_image"><img src="{{ asset('public/frontend') }}/images/banner_product.png"
-                        alt=""></div>
+                <div class="banner_product_image"><img src="{{ asset($banner_product->product_thumbnail) }}" alt="">
+                </div>
                 <div class="col-lg-5 offset-lg-4 fill_height">
                     <div class="banner_content">
-                        <h1 class="banner_text">new era of smartphones</h1>
-                        <div class="banner_price"><span>$530</span>$460</div>
-                        <div class="banner_product_name">Apple Iphone 6s</div>
-                        <div class="button banner_button"><a href="#">Shop Now</a></div>
+                        <h1 class="banner_text">{{ $banner_product->product_name }}</h1>
+                        @if ($banner_product->product_discount_price == null)
+                            <div class="banner_price">{{ $setting->currency }}{{ $banner_product->product_selling_price }}
+                            </div>
+                        @else
+                            <div class="banner_price">
+                                <span>{{ $setting->currency }}{{ $banner_product->product_selling_price }}</span>{{ $setting->currency }}{{ $banner_product->product_discount_price }}
+                            </div>
+                        @endif
+                        <div class="banner_product_name">{{ $banner_product->brand->brand_name }}</div>
+                        <div class="button banner_button"><a
+                                href="{{ route('product.details', $banner_product->product_slug) }}">Shop Now</a></div>
                     </div>
                 </div>
             </div>

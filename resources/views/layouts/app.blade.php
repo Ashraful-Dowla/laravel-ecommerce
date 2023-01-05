@@ -23,8 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/plugins/slick-1.8.0/slick.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/responsive.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/product_styles.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/product_responsive.css">
+    @stack('front_css')
 </head>
 
 <body>
@@ -91,7 +90,7 @@
                         <!-- Logo -->
                         <div class="col-lg-2 col-sm-3 col-3 order-1">
                             <div class="logo_container">
-                                <div class="logo"><a href="#">Ecom</a></div>
+                                <div class="logo"><a href="{{ url('/') }}">{{ config('app.name') }}</a></div>
                             </div>
                         </div>
 
@@ -294,7 +293,7 @@
     <script src="{{ asset('public/frontend') }}/plugins/slick-1.8.0/slick.js"></script>
     <script src="{{ asset('public/frontend') }}/plugins/easing/easing.js"></script>
     <script src="{{ asset('public/frontend') }}/js/custom.js"></script>
-    <script src="{{ asset('public/frontend') }}/js/product_custom.js"></script>
+    @stack('front_script')
 </body>
 
 </html>

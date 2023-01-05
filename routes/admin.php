@@ -70,8 +70,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/store', 'ProductController@store')->name('product.store');
         Route::post('/status-change/{id}', 'ProductController@statusChange')->name('product.statusChange');
         Route::delete('/delete/{id}', 'ProductController@destroy')->name('product.delete');
-        // Route::get('/edit/{id}', 'WarehouseController@edit')->name('warehouse.edit');
-        // Route::post('/update/{id}', 'WarehouseController@update')->name('warehouse.update');
+        Route::get('/edit/{id}', 'ProductController@edit')->name('product.edit');
+        Route::post('/update/{id}', 'ProductController@update')->name('product.update');
     });
 
     //coupon

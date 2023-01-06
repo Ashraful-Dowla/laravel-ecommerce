@@ -68,7 +68,7 @@ class Product extends Model
 
     public function pickuppoint()
     {
-        return $this->belongsTo(Pickuppoint::class);
+        return $this->belongsTo(Pickuppoint::class, 'pickup_point_id');
     }
 
 }

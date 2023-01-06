@@ -52,28 +52,57 @@
                             </div>
                             <div class="top_bar_content ml-auto">
                                 <div class="top_bar_menu">
-                                    <ul class="standard_dropdown top_bar_dropdown">
-                                        <li>
-                                            <a href="#">English<i class="fas fa-chevron-down"></i></a>
-                                            <ul>
-                                                <li><a href="#">English</a></li>
-                                                <li><a href="#">Bangla</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">Currency<i class="fas fa-chevron-down"></i></a>
-                                            <ul>
-                                                <li><a href="#">Taka ৳</a></li>
-                                                <li><a href="#">Dollar $</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                                    @if (Auth::check())
+                                        <ul class="standard_dropdown top_bar_dropdown">
+                                            <li>
+                                                <a href="#">English<i class="fas fa-chevron-down"></i></a>
+                                                <ul>
+                                                    <li><a href="#">English</a></li>
+                                                    <li><a href="#">Bangla</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Currency<i class="fas fa-chevron-down"></i></a>
+                                                <ul>
+                                                    <li><a href="#">Taka ৳</a></li>
+                                                    <li><a href="#">Dollar $</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    @endif
                                 </div>
                                 <div class="top_bar_user">
-                                    <div class="user_icon"><img src="{{ asset('public/frontend') }}/images/user.svg"
-                                            alt=""></div>
-                                    <div><a href="#">Register</a></div>
-                                    <div><a href="#">Sign in</a></div>
+                                    @guest
+                                        <div class="user_icon"><img src="{{ asset('public/frontend') }}/images/user.svg"
+                                                alt=""></div>
+                                        <div><a href="{{ route('register') }}">Register</a></div>
+                                        <div><a href="{{ route('login') }}">Sign in</a></div>
+                                    @else
+                                        <ul class="standard_dropdown top_bar_dropdown">
+                                            <li>
+                                                <a href="#">
+                                                    <div class="user_icon">
+                                                        <img src="{{ asset('public/frontend') }}/images/user.svg"
+                                                            alt="">
+                                                    </div>
+                                                    {{ Auth::user()->name }}
+                                                </a>
+                                                <ul>
+                                                    <li><a href="#">Profile</a></li>
+                                                    <li><a href="#">Order List</a></li>
+                                                    <li><a href="#">Setting</a></li>
+                                                    <li><a href="{{ route('logout') }}"
+                                                            onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">Logout</a>
+                                                    </li>
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                        class="d-none">
+                                                        @csrf
+                                                    </form>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    @endguest
                                 </div>
                             </div>
                         </div>

@@ -16,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/customer/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('customer.logout');
 
 Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     Route::get('/', 'IndexController@index');
     Route::get('/product-details/{slug}', 'IndexController@product_details')->name('product.details');
+
+    //review
+    Route::post('/review/store', 'ReviewController@store')->name('review.store');
 });

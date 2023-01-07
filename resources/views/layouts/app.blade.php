@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/plugins/slick-1.8.0/slick.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/responsive.css">
+    <link rel="stylesheet" href="{{ asset('public/backend') }}/plugins/toastr/toastr.min.css">
     @stack('front_css')
 </head>
 
@@ -91,14 +92,7 @@
                                                     <li><a href="#">Profile</a></li>
                                                     <li><a href="#">Order List</a></li>
                                                     <li><a href="#">Setting</a></li>
-                                                    <li><a href="{{ route('logout') }}"
-                                                            onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">Logout</a>
-                                                    </li>
-                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                        class="d-none">
-                                                        @csrf
-                                                    </form>
+                                                    <li><a href="{{ route('customer.logout') }}">Logout</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -322,7 +316,27 @@
     <script src="{{ asset('public/frontend') }}/plugins/slick-1.8.0/slick.js"></script>
     <script src="{{ asset('public/frontend') }}/plugins/easing/easing.js"></script>
     <script src="{{ asset('public/frontend') }}/js/custom.js"></script>
+    <script src="{{ asset('public/backend') }}/plugins/toastr/toastr.min.js"></script>
     @stack('front_script')
+    <script>
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert_type', 'info') }}";
+            switch (type) {
+                case 'info':
+                    toastr.info("{{ Session::get('message') }}");
+                    break;
+                case 'success':
+                    toastr.success("{{ Session::get('message') }}");
+                    break;
+                case 'warning':
+                    toastr.warning("{{ Session::get('message') }}");
+                    break;
+                case 'error':
+                    toastr.error("{{ Session::get('message') }}");
+                    break;
+            }
+        @endif
+    </script>
 </body>
 
 </html>

@@ -40,11 +40,18 @@
                         <div class="product_category">Stock: <b>{{ $product->product_stock_quantity }}</b></div>
                         <div class="product_category">Unit: <b>{{ $product->product_unit }}</b></div>
                         <div>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star "></span>
+                            @php
+                                $total_review = \App\Models\Review::where('product_id', $product->id)->count();
+                                $sum_review = \App\Models\Review::where('product_id', $product->id)->sum('review_rating');
+                                $total_review = $total_review == 0 ? 1 : $total_review;
+                                $average_review = intval($sum_review / $total_review);
+                            @endphp
+                            @for ($i = 0; $i < $average_review; $i++)
+                                <span class="fa fa-star text-warning"></span>
+                            @endfor
+                            @for ($i = 0; $i < 5 - $average_review; $i++)
+                                <span class="fa fa-star"></span>
+                            @endfor
                         </div>
                         @if ($product->product_discount_price == null)
                             <div class="product_price mt-4">{{ $setting->currency }}{{ $product->product_selling_price }}
@@ -70,7 +77,8 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="">Pick Size</label>
-                                                        <select name="product_size" class="form-control">
+                                                        <select name="product_size" class="form-control"
+                                                            style="min-width: 120px;">
                                                             @foreach (explode(',', $product->product_size) as $size)
                                                                 <option value="{{ $size }}">{{ $size }}
                                                                 </option>
@@ -83,7 +91,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label for="product_color">Pick Color</label>
-                                                            <select name="product_color" class="form-control">
+                                                            <select name="product_color" class="form-control"
+                                                                style="min-width: 120px;">
                                                                 @foreach (explode(',', $product->product_color) as $color)
                                                                     <option value="{{ $color }}">{{ $color }}
                                                                     </option>
@@ -159,17 +168,98 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-3">
-                                            Average Review of {{ $product->product_name }}:<br>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
+                                            Average Review of the product:<br>
+                                            @for ($i = 0; $i < $average_review; $i++)
+                                                <span class="fa fa-star text-warning"></span>
+                                            @endfor
+                                            @for ($i = 0; $i < 5 - $average_review; $i++)
+                                                <span class="fa fa-star"></span>
+                                            @endfor
+                                        </div>
+                                        <div class="col-lg-3">
+                                            Total review of the product:<br>
+                                            @for ($rating = 5; $rating >= 1; $rating--)
+                                                @for ($i = 0; $i < $rating; $i++)
+                                                    <span class="fa fa-star text-warning"></span>
+                                                @endfor
+                                                @for ($i = 0; $i < 5 - $rating; $i++)
+                                                    <span class="fa fa-star"></span>
+                                                @endfor
+                                                @php
+                                                    $count_review = \App\Models\Review::where('review_rating', $rating)
+                                                        ->where('product_id', $product->id)
+                                                        ->count();
+                                                @endphp
+                                                <span>(Total {{ $count_review }})</span>
+                                                <br />
+                                            @endfor
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <form action="{{ route('review.store') }}" method="post">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="details">Write Your Review</label>
+                                                    <textarea type="text" class="form-control @error('review_description') is-invalid @enderror"
+                                                        name="review_description" required></textarea>
+                                                    @error('review_description')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <div class="form-group ">
+                                                    <label for="review">Write Your Review</label>
+                                                    <select
+                                                        class="custom-select form-control-md @error('review_rating') is-invalid @enderror"
+                                                        name="review_rating" style="min-width: 120px;">
+                                                        <option disabled="" selected="">Select Your Review</option>
+                                                        <option value="1">1 star</option>
+                                                        <option value="2">2 star</option>
+                                                        <option value="3">3 star</option>
+                                                        <option value="5">4 star</option>
+                                                        <option value="5">5 star</option>
+                                                    </select>
+                                                    @error('review_rating')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                                @if (Auth::check())
+                                                    <button type="submit" class="btn btn-sm btn-info"><span
+                                                            class="fa fa-star "></span> submit review</button>
+                                                @else
+                                                    <p>Please at first login to your account for submit a review.</p>
+                                                @endif
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div><br />
+                    {{-- all reviews of the product --}}
+                    <strong>All Reviews of {{ $product->product_name }}</strong><br />
+                    <div class="row">
+                        @foreach ($reviews as $row)
+                            <div class="card col-lg-4 m-1">
+                                <div class="card-header">
+                                    <h4>{{ $row->user->name }} ( {{ date('d F, Y', strtotime($row->review_date)) }})</h4>
+                                </div>
+                                <div class="card-body">
+                                    {{ $row->review_description }}
+                                    <div>
+                                        @for ($i = 0; $i < $row->review_rating; $i++)
+                                            <span class="fa fa-star text-warning"></span>
+                                        @endfor
+                                        @for ($i = 0; $i < 5 - $row->review_rating; $i++)
+                                            <span class="fa fa-star"></span>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
 
                     <!-- Related Product -->
@@ -210,7 +300,7 @@
                                                                 </div>
                                                             @endif
                                                             <div class="viewed_name"><a
-                                                                    href="#">{{ substr($row->product_name, 0, 15) }}</a>
+                                                                    href="{{ route('product.details', $row->product_slug) }}">{{ substr($row->product_name, 0, 15) }}</a>
                                                             </div>
                                                         </div>
                                                         <ul class="item_marks">

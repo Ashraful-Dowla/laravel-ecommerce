@@ -26,12 +26,12 @@
                 </div>
 
                 <!-- Selected Image -->
-                <div class="col-lg-4 order-lg-2 order-1">
+                <div class="col-lg-3 order-lg-2 order-1">
                     <div class="image_selected"><img src="{{ asset($product->product_thumbnail) }}" alt=""></div>
                 </div>
 
                 <!-- Description -->
-                <div class="col-lg-3 order-3">
+                <div class="col-lg-4 order-3">
                     <div class="product_description">
                         <div class="product_category">{{ $product->category->category_name }} >
                             {{ $product->subcategory->subcategory_name }}</div>
@@ -116,10 +116,14 @@
                                             </div>
                                         </div>
                                         <div class="button_container">
-                                            <button type="button" class="button cart_button">Add to Cart</button>
-                                            <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-outline-info" type="submit">Add to Cart</button>
+                                                    <a href="{{ route('wishlist.store', $product->id) }}"
+                                                        class="btn btn-outline-primary" type="button">Add to Wishlist</a>
+                                                </div>
+                                            </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>

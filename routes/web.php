@@ -24,4 +24,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
 
     //review
     Route::post('/review/store', 'ReviewController@store')->name('review.store');
+
+
+    //wishlist
+    Route::get('/wishlist/store/{id}', 'WishlistController@store')->name('wishlist.store');
 });

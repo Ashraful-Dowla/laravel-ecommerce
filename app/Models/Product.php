@@ -39,6 +39,8 @@ class Product extends Model
         'product_cash_on_delivery',
         'product_color',
         'product_size',
+        'product_views',
+        'product_trendy',
         'flash_deal_id',
         'warehouse_id',
         'product_slug',

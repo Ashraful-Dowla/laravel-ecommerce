@@ -24,6 +24,8 @@ class WishlistController extends Controller
         Wishlist::insert([
             'user_id' => Auth::id(),
             'product_id' => $id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         $notification = array('message' => 'Product added on wishlist!', 'alert_type' => 'success');

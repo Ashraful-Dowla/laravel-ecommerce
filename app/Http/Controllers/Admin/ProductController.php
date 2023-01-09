@@ -118,6 +118,7 @@ class ProductController extends Controller
         $request['product_featured'] = $request->has('product_featured') ? 1 : 0;
         $request['product_today_deal'] = $request->has('product_today_deal') ? 1 : 0;
         $request['product_slider'] = $request->has('product_slider') ? 1 : 0;
+        $request['product_trendy'] = $request->has('product_trendy') ? 1 : 0;
 
         $photo_product_thumbnail_path = null;
         if ($request->hasFile('product_thumbnail')) {

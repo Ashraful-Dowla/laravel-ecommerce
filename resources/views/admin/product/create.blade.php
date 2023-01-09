@@ -260,11 +260,11 @@
                                             data-off-color="danger" data-on-color="success">
                                     </div>
 
-                                    {{-- <div class="card p-4">
+                                    <div class="card p-4">
                                         <h6>Trendy Product</h6>
-                                        <input type="checkbox" name="product_trendy" value="1" data-bootstrap-switch
+                                        <input type="checkbox" name="product_trendy" value="0" data-bootstrap-switch
                                             data-off-color="danger" data-on-color="success">
-                                    </div> --}}
+                                    </div>
 
                                     <div class="card p-4">
                                         <h6>Status</h6>

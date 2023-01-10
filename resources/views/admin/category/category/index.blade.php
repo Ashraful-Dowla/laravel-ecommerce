@@ -37,6 +37,8 @@
                                             <th>SL</th>
                                             <th>Category Name</th>
                                             <th>Category Slug</th>
+                                            <th>Category Icon</th>
+                                            <th>Category Home Page</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -46,6 +48,13 @@
                                                 <td>{{ $key }}</td>
                                                 <td>{{ $row->category_name }}</td>
                                                 <td>{{ $row->category_slug }}</td>
+                                                <td><img src="{{ asset($row->category_icon) }}" height="32"
+                                                        width="32"></td>
+                                                <td>
+                                                    @if ($row->category_home_page == 1)
+                                                        <span class="badge badge-success">Home Page</span>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <a href="#" class="btn btn-info btn-sm" data-toggle="modal"
                                                         data-target="#editCategoryModal"
@@ -60,14 +69,6 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>SL</th>
-                                            <th>Category Name</th>
-                                            <th>Category Slug</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                             <!-- /.card-body -->
@@ -93,7 +94,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action={{ route('category.store') }} method="POST">
+                <form action={{ route('category.store') }} method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -101,16 +102,17 @@
                             <input type="text" class="form-control" id="category_name" name="category_name"
                                 value="{{ old('category_name') }}" required>
                         </div>
-                        @error('category_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        @error('category_slug')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>category name already exists</strong>
-                            </span>
-                        @enderror
+                        <div class="form-group">
+                            <label for="category_icon">Category Icon</label>
+                            <input type="file" class="form-control" id="category_icon" name="category_icon" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category_home_page">Category Home Page</label>
+                            <select name="category_home_page" class="form-control">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -131,25 +133,26 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action={{ route('category.update') }} method="POST">
+                <form action={{ route('category.update') }} method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="category_name">Category Name</label>
                             <input type="hidden" class="form-control" id="e_category_id" name="id">
                             <input type="text" class="form-control" id="e_category_name" name="category_name"
-                                value="{{ old('category_name') }}" required>
+                                value="" required>
                         </div>
-                        @error('category_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        @error('category_slug')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>category name already exists</strong>
-                            </span>
-                        @enderror
+                        <div class="form-group">
+                            <label for="category_icon">Category Icon</label>
+                            <input type="file" class="form-control" id="category_icon" name="category_icon">
+                        </div>
+                        <div class="form-group">
+                            <label for="category_home_page">Category Home Page</label>
+                            <select name="category_home_page" class="form-control" id="e_category_home_page">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -173,6 +176,7 @@
                     success: function(data) {
                         $("#e_category_id").val(data.id);
                         $("#e_category_name").val(data.category_name);
+                        $("#e_category_home_page").val(data.category_home_page);
                     }
                 });
             }

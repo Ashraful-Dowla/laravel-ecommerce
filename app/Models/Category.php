@@ -12,5 +12,7 @@ class Category extends Model
     protected $fillable = [
         'category_name',
         'category_slug',
+        'category_icon',
+        'category_home_page',
     ];
 }

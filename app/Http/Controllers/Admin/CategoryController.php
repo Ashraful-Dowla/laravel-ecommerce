@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use DB;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Image;
 
 class CategoryController extends Controller
 {
@@ -30,18 +32,19 @@ class CategoryController extends Controller
         $request->validate([
             'category_name' => 'required|max:100',
             'category_slug' => 'unique:categories|max:255',
+            'category_icon' => 'required',
         ]);
 
-        // DB::table('categories')->insert([
-        //     'category_name' => $request->category_name,
-        //     'category_slug' => $request->category_slug,
-        //     'created_at' => now(),
-        //     'updated_at' => now(),
-        // ]);
+        $photo_category_path = null;
+        if ($request->hasFile('category_icon')) {
+            $photo_category_path = $this->categoryFileUpload(null, $request->category_icon, 32, 32);
+        }
 
         Category::insert([
             'category_name' => $request->category_name,
             'category_slug' => $request->category_slug,
+            'category_icon' => $photo_category_path,
+            'category_home_page' => $request->category_home_page,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -73,9 +76,18 @@ class CategoryController extends Controller
         //     'updated_at' => now(),
         // ]);
 
-        Category::where('id', $request->id)->update([
+        $category = Category::where('id', $request->id)->first();
+
+        $photo_category_path = $category->category_icon;
+        if ($request->hasFile('category_icon')) {
+            $photo_category_path = $this->categoryFileUpload($photo_category_path, $request->category_icon, 32, 32);
+        }
+
+        $category->update([
             'category_name' => $request->category_name,
             'category_slug' => $request->category_slug,
+            'category_icon' => $photo_category_path,
+            'category_home_page' => $request->category_home_page,
             'updated_at' => now(),
         ]);
 
@@ -91,6 +103,19 @@ class CategoryController extends Controller
 
         $notification = array('message' => 'Category Deleted', 'alert_type' => 'success');
         return back()->with($notification);
+    }
+
+    protected function categoryFileUpload($file_path, $photo, $width, $height)
+    {
+        if ($file_path && File::exists($file_path)) {
+            File::delete($file_path);
+        }
+
+        $photoname = uniqid() . '.' . $photo->getClientOriginalExtension();
+        $photo_path = "public/files/category/" . $photoname;
+        Image::make($photo)->resize($width, $height)->save($photo_path);
+
+        return $photo_path;
     }
 
 }

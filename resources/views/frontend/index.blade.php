@@ -308,12 +308,11 @@
                                                     </div>
                                                     <div class="product_extras">
                                                         <div class="product_color">
-                                                            <input type="radio" checked name="product_color"
-                                                                style="background:#b19c83">
-                                                            <input type="radio" name="product_color"
-                                                                style="background:#000000">
-                                                            <input type="radio" name="product_color"
-                                                                style="background:#999999">
+                                                            <a href="#" data-toggle="modal"
+                                                                data-target="#quickViewProductModal"
+                                                                onclick="getProductById(`{{ $row->id }}`)">
+                                                                quick view</i>
+                                                            </a>
                                                         </div>
                                                         <button class="product_cart_button">Add to Cart</button>
                                                     </div>
@@ -366,12 +365,11 @@
                                                     </div>
                                                     <div class="product_extras">
                                                         <div class="product_color">
-                                                            <input type="radio" checked name="product_color"
-                                                                style="background:#b19c83">
-                                                            <input type="radio" name="product_color"
-                                                                style="background:#000000">
-                                                            <input type="radio" name="product_color"
-                                                                style="background:#999999">
+                                                            <a href="#" data-toggle="modal"
+                                                                data-target="#quickViewProductModal"
+                                                                onclick="getProductById(`{{ $row->id }}`)">
+                                                                quick view</i>
+                                                            </a>
                                                         </div>
                                                         <button class="product_cart_button">Add to Cart</button>
                                                     </div>
@@ -3820,20 +3818,34 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="quickViewProductModal" tabindex="-1" role="dialog"
+        aria-labelledby="quickViewProductModal" aria-hidden="true">
         <div class="modal-dialog  modal-lg  modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Product View</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body" id="quick_view_body">
-
                 </div>
             </div>
         </div>
     </div>
+    @push('front_script')
+        <script>
+            function getProductById(id) {
+                let url = "{{ route('product.quick.view', ':id') }}";
+                url = url.replace(':id', id);
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function(data) {
+                        $("#quick_view_body").html(data);
+                    }
+                });
+            }
+        </script>
+    @endpush
 @endsection

@@ -33,6 +33,13 @@ class IndexController extends Controller
         $reviews = Review::where('product_id', $product->id)->orderBy('id', 'desc')->take(6)->get();
         $wishlist_count = Wishlist::where('user_id', Auth::id())->count();
 
-        return view('frontend.product_details', compact('product', 'related_products', 'reviews', 'wishlist_count'));
+        return view('frontend.product.product_details', compact('product', 'related_products', 'reviews', 'wishlist_count'));
+    }
+
+    //product quick view
+    public function product_quick_view($id)
+    {
+        $product = Product::where('id', $id)->first();
+        return view('frontend.product.product_quick_view', compact('product'));
     }
 }

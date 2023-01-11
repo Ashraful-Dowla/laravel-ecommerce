@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Wishlist;
+use App\Models\Brand;
 use Auth;
 
 class IndexController extends Controller
@@ -20,8 +21,11 @@ class IndexController extends Controller
         $popular_products = Product::where('product_status', 1)->orderBy('product_views', 'desc')->limit(8)->get();
         $trendy_products = Product::where('product_status', 1)->where('product_trendy', 1)->orderBy('id', 'desc')->get();
         $wishlist_count = Wishlist::where('user_id', Auth::id())->count();
+        $brands = Brand::all();
 
-        return view('frontend.index', compact('categories', 'banner_product', 'featured_products', 'wishlist_count', 'popular_products', 'trendy_products'));
+        $home_category = Category::where('category_home_page', 1)->orderBy('category_name', 'asc')->get();
+
+        return view('frontend.index', compact('categories', 'banner_product', 'featured_products', 'wishlist_count', 'popular_products', 'trendy_products', 'home_category','brands'));
     }
 
     // single product view

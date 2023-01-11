@@ -13,7 +13,7 @@
             <div class="col-lg-8 ">
                 <h3>{{ $product->name }}</h3>
                 <p>{{ $product->category->category_name }} > {{ $product->subcategory->subcategory_name }}</p>
-                <p>Brand: {{ $product->brand->brand_name }}</p>
+                <p>Brand: {{ $product->brand == null ? 'Unknown' : $product->brand->brand_name }}</p>
                 <p>Stock: @if ($product->product_stock_quantity < 1)
                         <span class="badge badge-danger">Stock Out</span>
                     @else
@@ -25,7 +25,8 @@
                         <div class="">Price: {{ $setting->currency }}{{ $product->product_selling_price }}</div>
                     @else
                         <div class="">
-                            Price: <del class="text-danger">{{ $setting->currency }}{{ $product->product_selling_price }}</del
+                            Price: <del
+                                class="text-danger">{{ $setting->currency }}{{ $product->product_selling_price }}</del
                                 class="text-danger">
                             {{ $setting->currency }}{{ $product->product_discount_price }}</div>
                     @endif

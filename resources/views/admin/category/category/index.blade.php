@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
+@endpush
 
 @section('admin_content')
     <div class="content-wrapper">
@@ -104,7 +107,8 @@
                         </div>
                         <div class="form-group">
                             <label for="category_icon">Category Icon</label>
-                            <input type="file" class="form-control" id="category_icon" name="category_icon" required>
+                            <input type="file" class="form-control dropify" id="category_icon" name="category_icon"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="category_home_page">Category Home Page</label>
@@ -144,7 +148,7 @@
                         </div>
                         <div class="form-group">
                             <label for="category_icon">Category Icon</label>
-                            <input type="file" class="form-control" id="category_icon" name="category_icon">
+                            <input type="file" class="form-control dropify" id="category_icon" name="category_icon">
                         </div>
                         <div class="form-group">
                             <label for="category_home_page">Category Home Page</label>
@@ -165,6 +169,17 @@
 
     <!-- script -->
     @push('script')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+        <script>
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Click here',
+                    'replace': 'Drag and drop or click to replace',
+                    'remove': 'Remove',
+                    'error': 'Ooops, something wrong happended.'
+                }
+            });
+        </script>
         <script>
             function getCategoryDataById(id) {
                 let url = "{{ route('category.edit', ':id') }}";

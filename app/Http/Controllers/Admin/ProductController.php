@@ -60,7 +60,7 @@ class ProductController extends Controller
                     return $row->subcategory->subcategory_name;
                 })
                 ->editColumn('brand_name', function ($row) {
-                    return $row->brand->brand_name;
+                    return $row->brand == null ? "Unknown" : $row->brand->brand_name;
                 })
                 ->editColumn('product_featured', function ($row) {
                     $status_type = 'product_featured';
@@ -99,7 +99,7 @@ class ProductController extends Controller
         $request->validate([
             'subcategory_id' => 'required|exists:subcategories,id',
             'childcategory_id' => 'required|exists:childcategories,id',
-            'brand_id' => 'required|exists:brands,id',
+            'brand_id' => 'exists:brands,id',
             'pickup_point_id' => 'required|exists:pickup_point,id',
             'product_name' => 'required|max:255',
             'product_code' => 'required|max:255',

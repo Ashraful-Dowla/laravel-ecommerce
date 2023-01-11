@@ -110,7 +110,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-lg-6">
-                                            <label for="exampleInputEmail1">Brand <span class="text-danger">*</span>
+                                            <label for="exampleInputEmail1">Brand</span>
                                             </label>
                                             <select class="form-control" name="brand_id">
                                                 <option disabled selected>Choose Brand</option>

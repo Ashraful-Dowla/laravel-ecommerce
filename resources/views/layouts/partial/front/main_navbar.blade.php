@@ -17,8 +17,11 @@
                          <ul class="cat_menu">
                              @foreach ($categories as $category)
                                  <li class="hassubs">
-                                     <a href="#">{{ $category->category_name }}<i
-                                             class="fas fa-chevron-right"></i></a>
+                                     <a href="#">
+                                         <img src="{{ asset($category->category_icon) }}" height="18"
+                                             width="18">&nbsp;{{ $category->category_name }}<i
+                                             class="fas fa-chevron-right"></i>
+                                     </a>
                                      <ul>
                                          @php
                                              $subcategories = \App\Models\Subcategory::where('category_id', $category->id)->get();

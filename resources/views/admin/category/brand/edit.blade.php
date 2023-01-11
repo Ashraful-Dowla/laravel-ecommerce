@@ -10,6 +10,13 @@
             <label for="brand_logo">Brand Logo</label>
             <input type="file" class="dropify" name="brand_logo">
         </div>
+        <div class="form-group">
+            <label for="front_page">Home Page</label>
+            <select name="front_page" class="form-control">
+                <option value="1" {{ $brand->front_page == 1 ? 'selected' : null }}>Active</option>
+                <option value="0" {{ $brand->front_page == 0 ? 'selected' : null }}>Inactive</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

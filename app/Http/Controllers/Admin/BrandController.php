@@ -26,7 +26,7 @@ class BrandController extends Controller
     }
 
     // brand data loaded by yajra datatable
-    public function list(Request $request) {
+    function list(Request $request) {
         if ($request->ajax()) {
             $brands = DB::table('brands')->get();
 
@@ -49,6 +49,7 @@ class BrandController extends Controller
             'brand_name' => 'required|max:100',
             'brand_slug' => 'max:255|unique:brands',
             'brand_logo' => 'required|mimes:png,jpg,jpeg|max:10000',
+            'front_page' => 'in:1,0',
         ]);
 
         //image
@@ -62,8 +63,9 @@ class BrandController extends Controller
             'brand_name' => $request->brand_name,
             'brand_slug' => $request->brand_slug,
             'brand_logo' => $photo_file_path,
+            'front_page' => $request->front_page,
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
         ]);
 
         $notification = array('message' => 'Brand Created', 'alert_type' => 'success');
@@ -86,15 +88,16 @@ class BrandController extends Controller
             'brand_name' => 'required|max:100',
             'brand_slug' => 'max:255|unique:brands,brand_slug,' . $id,
             'brand_logo' => 'mimes:png,jpg,jpeg|max:10000',
+            'front_page' => 'in:1,0',
         ]);
 
-        $brand = Brand::where('id',$id)->first();
+        $brand = Brand::where('id', $id)->first();
 
         $photo = $request->brand_logo;
         $photo_file_path = $brand->brand_logo;
 
-        if($photo){
-            if(File::exists($photo_file_path)){
+        if ($photo) {
+            if (File::exists($photo_file_path)) {
                 File::delete($photo_file_path);
             }
             $photoname = $request->brand_slug . '.' . $photo->getClientOriginalExtension();
@@ -106,7 +109,8 @@ class BrandController extends Controller
             'brand_name' => $request->brand_name,
             'brand_slug' => $request->brand_slug,
             'brand_logo' => $photo_file_path,
-            'updated_at' => now()
+            'front_page' => $request->front_page,
+            'updated_at' => now(),
         ]);
 
         $notification = array('message' => 'Brand Updated', 'alert_type' => 'success');

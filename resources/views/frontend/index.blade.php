@@ -38,7 +38,17 @@
     <div class="characteristics">
         <div class="container">
             <div class="row">
-
+                @foreach ($brands as $row)
+                    <div class="col-lg-2 col-md-6 char_col" style="border: 1px solid grey; padding: 5px;">
+                        <div class="brands_item d-flex flex-column justify-content-center text-center">
+                            <a href="#" title="{{ $row->brand_name }}">
+                                <img src="{{ asset($row->brand_logo) }}" alt="{{ $row->brand_name }}" height="90%"
+                                    width="70%">
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+                {{--
                 <!-- Char. Item -->
                 <div class="col-lg-3 col-md-6 char_col">
 
@@ -50,46 +60,7 @@
                             <div class="char_subtitle">from $50</div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Char. Item -->
-                <div class="col-lg-3 col-md-6 char_col">
-
-                    <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                        <div class="char_icon"><img src="{{ asset('public/frontend') }}/images/char_2.png" alt="">
-                        </div>
-                        <div class="char_content">
-                            <div class="char_title">Free Delivery</div>
-                            <div class="char_subtitle">from $50</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Char. Item -->
-                <div class="col-lg-3 col-md-6 char_col">
-
-                    <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                        <div class="char_icon"><img src="{{ asset('public/frontend') }}/images/char_3.png" alt="">
-                        </div>
-                        <div class="char_content">
-                            <div class="char_title">Free Delivery</div>
-                            <div class="char_subtitle">from $50</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Char. Item -->
-                <div class="col-lg-3 col-md-6 char_col">
-
-                    <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                        <div class="char_icon"><img src="{{ asset('public/frontend') }}/images/char_4.png" alt="">
-                        </div>
-                        <div class="char_content">
-                            <div class="char_title">Free Delivery</div>
-                            <div class="char_subtitle">from $50</div>
-                        </div>
-                    </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -1927,7 +1898,7 @@
             <div class="row">
                 <div class="col">
                     <div class="viewed_title_container">
-                        <h3 class="viewed_title">Recently Viewed</h3>
+                        <h3 class="viewed_title">Products For You</h3>
                         <div class="viewed_nav_container">
                             <div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
                             <div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
@@ -1941,112 +1912,33 @@
                         <div class="owl-carousel owl-theme viewed_slider">
 
                             <!-- Recently Viewed Item -->
-                            <div class="owl-item">
-                                <div
-                                    class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                    <div class="viewed_image"><img
-                                            src="{{ asset('public/frontend') }}/images/view_1.jpg" alt="">
+                            @foreach ($random_products as $row)
+                                <div class="owl-item">
+                                    <div
+                                        class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+                                        <div class="viewed_image"><img src="{{ asset($row->product_thumbnail) }}"
+                                                alt="{{ $row->product_name }}">
+                                        </div>
+                                        <div class="viewed_content text-center">
+                                            <div class="viewed_price">
+                                                @if ($row->product_discount_price != null)
+                                                    <div class="discount viewed_price">
+                                                        {{ $setting->currency }}{{ $row->product_discount_price }}<span>
+                                                            <small>{{ $setting->currency }}{{ $row->product_selling_price }}</small></span>
+                                                    </div>
+                                                @else
+                                                    <div>
+                                                        {{ $setting->currency }}{{ $row->product_selling_price }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="viewed_name"><a
+                                                    href="{{ route('product.details', $row->product_slug) }}">{{ substr($row->product_name, 0, 15) }}</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="viewed_content text-center">
-                                        <div class="viewed_price">$225<span>$300</span></div>
-                                        <div class="viewed_name"><a href="#">Beoplay H7</a></div>
-                                    </div>
-                                    <ul class="item_marks">
-                                        <li class="item_mark item_discount">-25%</li>
-                                        <li class="item_mark item_new">new</li>
-                                    </ul>
                                 </div>
-                            </div>
-
-                            <!-- Recently Viewed Item -->
-                            <div class="owl-item">
-                                <div
-                                    class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-                                    <div class="viewed_image"><img
-                                            src="{{ asset('public/frontend') }}/images/view_2.jpg" alt="">
-                                    </div>
-                                    <div class="viewed_content text-center">
-                                        <div class="viewed_price">$379</div>
-                                        <div class="viewed_name"><a href="#">LUNA Smartphone</a></div>
-                                    </div>
-                                    <ul class="item_marks">
-                                        <li class="item_mark item_discount">-25%</li>
-                                        <li class="item_mark item_new">new</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Recently Viewed Item -->
-                            <div class="owl-item">
-                                <div
-                                    class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-                                    <div class="viewed_image"><img
-                                            src="{{ asset('public/frontend') }}/images/view_3.jpg" alt="">
-                                    </div>
-                                    <div class="viewed_content text-center">
-                                        <div class="viewed_price">$225</div>
-                                        <div class="viewed_name"><a href="#">Samsung J730F...</a></div>
-                                    </div>
-                                    <ul class="item_marks">
-                                        <li class="item_mark item_discount">-25%</li>
-                                        <li class="item_mark item_new">new</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Recently Viewed Item -->
-                            <div class="owl-item">
-                                <div
-                                    class="viewed_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                    <div class="viewed_image"><img
-                                            src="{{ asset('public/frontend') }}/images/view_4.jpg" alt="">
-                                    </div>
-                                    <div class="viewed_content text-center">
-                                        <div class="viewed_price">$379</div>
-                                        <div class="viewed_name"><a href="#">Huawei MediaPad...</a></div>
-                                    </div>
-                                    <ul class="item_marks">
-                                        <li class="item_mark item_discount">-25%</li>
-                                        <li class="item_mark item_new">new</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Recently Viewed Item -->
-                            <div class="owl-item">
-                                <div
-                                    class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                    <div class="viewed_image"><img
-                                            src="{{ asset('public/frontend') }}/images/view_5.jpg" alt="">
-                                    </div>
-                                    <div class="viewed_content text-center">
-                                        <div class="viewed_price">$225<span>$300</span></div>
-                                        <div class="viewed_name"><a href="#">Sony PS4 Slim</a></div>
-                                    </div>
-                                    <ul class="item_marks">
-                                        <li class="item_mark item_discount">-25%</li>
-                                        <li class="item_mark item_new">new</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Recently Viewed Item -->
-                            <div class="owl-item">
-                                <div
-                                    class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-                                    <div class="viewed_image"><img
-                                            src="{{ asset('public/frontend') }}/images/view_6.jpg" alt="">
-                                    </div>
-                                    <div class="viewed_content text-center">
-                                        <div class="viewed_price">$375</div>
-                                        <div class="viewed_name"><a href="#">Speedlink...</a></div>
-                                    </div>
-                                    <ul class="item_marks">
-                                        <li class="item_mark item_discount">-25%</li>
-                                        <li class="item_mark item_new">new</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -2067,8 +1959,12 @@
                         <div class="owl-carousel owl-theme brands_slider">
                             @foreach ($brands as $row)
                                 <div class="owl-item">
-                                    <div class="brands_item d-flex flex-column justify-content-center"><img
-                                            src="{{ asset($row->brand_logo) }}" alt="{{ $row->brand_name }}" height="50%" width="70%"></div>
+                                    <div class="brands_item d-flex flex-column justify-content-center">
+                                        <a href="#" title="{{ $row->brand_name }}">
+                                            <img src="{{ asset($row->brand_logo) }}" alt="{{ $row->brand_name }}"
+                                                height="50" width="40">
+                                        </a>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>

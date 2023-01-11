@@ -42,6 +42,7 @@
                                             <th>Brand Name</th>
                                             <th>Brand Slug</th>
                                             <th>Brand Logo</th>
+                                            <th>Home Page</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -83,6 +84,13 @@
                         <div class="form-group">
                             <label for="brand_logo">Brand Logo</label>
                             <input type="file" class="dropify" name="brand_logo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="front_page">Home Page</label>
+                            <select name="front_page" class="form-control">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -135,6 +143,14 @@
                             name: "brand_logo",
                             render: function(data, type, full, meta) {
                                 return `<img src=${data} height="40">`;
+                            }
+                        },
+                        {
+                            data: "front_page",
+                            name: "front_page",
+                            render: function(data, type, full, meta) {
+                                return data == 1 ?
+                                    `<span class="badge badge-success">Home Page</span>` : null;
                             }
                         },
                         {

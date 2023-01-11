@@ -36,7 +36,8 @@
                         <div class="product_category">{{ $product->category->category_name }} >
                             {{ $product->subcategory->subcategory_name }}</div>
                         <div class="product_name" style="font-size: 20px;">{{ $product->product_name }}</div>
-                        <div class="product_category">Brand: <b>{{ $product->brand->brand_name }}</b></div>
+                        <div class="product_category">Brand:
+                            <b>{{ $product->brand == null ? 'Unknown' : $product->brand->brand_name }}</b></div>
                         <div class="product_category">Stock: <b>{{ $product->product_stock_quantity }}</b></div>
                         <div class="product_category">Unit: <b>{{ $product->product_unit }}</b></div>
                         <div>

@@ -167,11 +167,14 @@
                                     <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                         <div class="cart_icon">
                                             <img src="{{ asset('public/frontend') }}/images/cart.png" alt="">
-                                            <div class="cart_count"><span>10</span></div>
+                                            <div class="cart_count"><span id="cart_qty"></span>
+                                            </div>
                                         </div>
                                         <div class="cart_content">
                                             <div class="cart_text"><a href="#">Cart</a></div>
-                                            <div class="cart_price">$85</div>
+                                            <div class="cart_price">{{ $setting->currency }}
+                                                <span id="cart_total"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -336,6 +339,24 @@
                     break;
             }
         @endif
+    </script>
+    <script>
+        function cart() {
+            $.ajax({
+                url: "{{ route('cart.all') }}",
+                type: "GET",
+                async: false,
+                success: function(data) {
+                    $("#cart_qty").empty();
+                    $("#cart_total").empty();
+                    $("#cart_qty").append(data.cart_qty);
+                    $("#cart_total").append(data.cart_total);
+                }
+            })
+        }
+        $(function() {
+            cart();
+        })
     </script>
 </body>
 

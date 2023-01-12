@@ -26,9 +26,11 @@ class IndexController extends Controller
 
         $home_category = Category::where('category_home_page', 1)->orderBy('category_name', 'asc')->get();
 
+        $today_deal_products = Product::where('product_status', 1)->where('product_today_deal', 1)->orderBy('id')->limit(6)->get();
+
         return view('frontend.index', compact('categories', 'banner_product',
             'featured_products', 'wishlist_count', 'popular_products',
-            'trendy_products', 'home_category', 'brands', 'random_products'));
+            'trendy_products', 'home_category', 'brands', 'random_products', 'today_deal_products'));
     }
 
     // single product view

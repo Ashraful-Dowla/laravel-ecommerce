@@ -19,9 +19,12 @@
                 <!-- Images -->
                 <div class="col-lg-2 order-lg-1 order-2">
                     <ul class="image_list">
-                        @foreach (json_decode($product->product_images) as $file_path)
-                            <li data-image="{{ asset($file_path) }}"><img src="{{ asset($file_path) }}" alt=""></li>
-                        @endforeach
+                        @if (json_decode($product->product_images))
+                            @foreach (json_decode($product->product_images) as $file_path)
+                                <li data-image="{{ asset($file_path) }}"><img src="{{ asset($file_path) }}" alt="">
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
 
@@ -37,7 +40,8 @@
                             {{ $product->subcategory->subcategory_name }}</div>
                         <div class="product_name" style="font-size: 20px;">{{ $product->product_name }}</div>
                         <div class="product_category">Brand:
-                            <b>{{ $product->brand == null ? 'Unknown' : $product->brand->brand_name }}</b></div>
+                            <b>{{ $product->brand == null ? 'Unknown' : $product->brand->brand_name }}</b>
+                        </div>
                         <div class="product_category">Stock: <b>{{ $product->product_stock_quantity }}</b></div>
                         <div class="product_category">Unit: <b>{{ $product->product_unit }}</b></div>
                         <div>
@@ -63,12 +67,6 @@
                                 </del>{{ $setting->currency }}{{ $product->product_discount_price }}
                             </div>
                         @endif
-                        {{-- <div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div> --}}
-                        {{-- <div class="product_text">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum. laoreet turpis,
-                                nec sollicitudin dolor cursus at. Maecenas aliquet, dolor a faucibus efficitur, nisi tellus
-                                cursus urna, eget dictum lacus turpis.</p>
-                        </div> --}}
                         <div class="order_info d-flex flex-row">
                             <form action="#">
                                 <div class="clearfix" style="z-index: 1000;">

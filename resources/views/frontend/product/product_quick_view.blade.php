@@ -32,7 +32,7 @@
                     @endif
                 </div>
                 <div class="order_info d-flex flex-row">
-                    <form action="#" method="post" id="add_cart_form">
+                    <form action="{{ route('cart.add.quick.view') }}" method="post" id="add_cart_form">
                         @csrf
                         {{-- cart add details --}}
                         <input type="hidden" name="id" value="{{ $product->id }}">
@@ -65,7 +65,8 @@
                             <div class="col-lg-4" style="margin-left: -5px;">
                                 <label>Quantity: </label>
                                 <input type="number" min="1" max="100" name="qty"
-                                    class="form-control-sm" value="1" style="min-width: 120px; margin-left: -4px;">
+                                    class="form-control-sm" value="1" style="min-width: 120px; margin-left: -4px;"
+                                    value="1">
                             </div>
                         </div>
                         <div class="button_container">
@@ -75,8 +76,7 @@
                                         <span class="text-danger">Stock Out</span>
                                     @else
                                         <button class="btn btn-sm btn-outline-info" type="submit"
-                                            style="float: right;">
-                                            <span class="loading d-none">....</span> Add to cart</button>
+                                            style="float: right;">Add to cart</button>
                                     @endif
                                 </div>
                             </div>
@@ -88,3 +88,29 @@
         </div>
     </div>
 </div>
+<script>
+    $("#add_cart_form").submit(function(e) {
+        e.preventDefault();
+        let url = $(this).attr('action');
+        let request = $(this).serialize();
+
+        $("button[type=submit]").attr('disabled', true);
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            async: false,
+            data: request,
+            success: function(data) {
+                toastr.success(data);
+                $("#add_cart_form")[0].reset();
+                $("#quickViewProductModal").modal("hide");
+                $("button[type=submit]").attr('disabled', false);
+                cart();
+            },
+            error: function(error) {
+                $("button[type=submit]").attr('disabled', false);
+            }
+        });
+    });
+</script>

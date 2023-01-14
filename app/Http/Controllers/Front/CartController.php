@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    // show cart page
+    public function index()
+    {
+        $cart_content = Cart::content();
+        return view('frontend.cart.index', compact('cart_content'));
+    }
+
     // product add to cart
     public function add_to_cart(Request $request)
     {
@@ -39,5 +46,37 @@ class CartController extends Controller
             'cart_qty' => Cart::count(),
             'cart_total' => Cart::total(),
         ]);
+    }
+
+    //product remove from cart
+    public function remove($rowId)
+    {
+        Cart::remove($rowId);
+        return response()->json("Cart Item removed");
+    }
+
+    //product cart update
+    public function update(Request $request, $rowId)
+    {
+        $thumbnail = Cart::get($rowId)->options->thumbnail;
+
+        Cart::update($rowId, [
+            'qty' => $request->qty,
+            'options' => [
+                'color' => $request->color,
+                'size' => $request->size,
+                'thumbnail' => $thumbnail,
+            ],
+        ]);
+
+        return response()->json('Cart Item updated');
+    }
+
+    //cart destroy
+    public function destroy()
+    {
+        Cart::destroy();
+        $notification = array('message' => 'Cart Item cleared', 'alert_type' => 'success');
+        return back()->with($notification);
     }
 }

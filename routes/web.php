@@ -26,6 +26,10 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     //cart
     Route::post('/add-to-cart', 'CartController@add_to_cart')->name('cart.add.quick.view');
     Route::get('/all-cart', 'CartController@all_cart')->name('cart.all');
+    Route::get('/my-cart', 'CartController@index')->name('cart.index');
+    Route::get('/cart/destroy', 'CartController@destroy')->name('cart.destroy');
+    Route::delete('/cart/product/remove/{rowId}', 'CartController@remove')->name('cart.product.remove');
+    Route::post('/cart/product/update/{rowId}', 'CartController@update')->name('cart.product.update');
 
     //review
     Route::post('/review/store', 'ReviewController@store')->name('review.store');

@@ -171,7 +171,7 @@
                                             </div>
                                         </div>
                                         <div class="cart_content">
-                                            <div class="cart_text"><a href="#">Cart</a></div>
+                                            <div class="cart_text"><a href="{{ route('cart.index') }}">Cart</a></div>
                                             <div class="cart_price">{{ $setting->currency }}
                                                 <span id="cart_total"></span>
                                             </div>

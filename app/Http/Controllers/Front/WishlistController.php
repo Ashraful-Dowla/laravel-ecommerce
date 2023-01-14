@@ -8,13 +8,18 @@ use Auth;
 
 class WishlistController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function store($id)
     {
+        if(!Auth::check()){
+            $notification = array('message' => 'Please login for wishlist', 'alert_type' => 'error');
+            return back()->with($notification);
+        }
+
         $check_wishlist = Wishlist::where('product_id', $id)->where('user_id', Auth::id())->first();
         if ($check_wishlist) {
             $notification = array('message' => 'Product is already wishlisted!', 'alert_type' => 'error');

@@ -15,6 +15,9 @@
                          </div>
 
                          <ul class="cat_menu">
+                            @php
+                                $categories = \App\Models\Category::all();
+                            @endphp
                              @foreach ($categories as $category)
                                  <li class="hassubs">
                                      <a href="#">

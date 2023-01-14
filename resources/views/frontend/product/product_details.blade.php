@@ -68,7 +68,9 @@
                             </div>
                         @endif
                         <div class="order_info d-flex flex-row">
-                            <form action="#">
+                            <form action="{{ route('cart.add.quick.view') }}" method="post" id="add_cart_form">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $product->id }}">
                                 <div class="clearfix" style="z-index: 1000;">
                                     <div class="form-group">
                                         <div class="row">
@@ -76,8 +78,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <label for="">Pick Size</label>
-                                                        <select name="product_size" class="form-control"
-                                                            style="min-width: 120px;">
+                                                        <select name="size" class="form-control" style="min-width: 120px;">
                                                             @foreach (explode(',', $product->product_size) as $size)
                                                                 <option value="{{ $size }}">{{ $size }}
                                                                 </option>
@@ -90,8 +91,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <label for="product_color">Pick Color</label>
-                                                            <select name="product_color" class="form-control"
-                                                                style="min-width: 120px;">
+                                                            <select name="color" class="form-control" style="min-width: 120px;">
                                                                 @foreach (explode(',', $product->product_color) as $color)
                                                                     <option value="{{ $color }}">{{ $color }}
                                                                     </option>
@@ -105,7 +105,8 @@
                                             <!-- Product Quantity -->
                                             <div class="product_quantity clearfix">
                                                 <span>Quantity: </span>
-                                                <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+                                                <input id="quantity_input" name="qty" type="text" pattern="[0-9]*"
+                                                    value="1">
                                                 <div class="quantity_buttons">
                                                     <div id="quantity_inc_button" class="quantity_inc quantity_control"><i
                                                             class="fas fa-chevron-up"></i></div>
@@ -117,7 +118,11 @@
                                         <div class="button_container">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <button class="btn btn-outline-info" type="submit">Add to Cart</button>
+                                                    @if ($product->product_stock_quantity >= 1)
+                                                        <button class="btn btn-outline-info" type="submit">Add to Cart</button>
+                                                    @else
+                                                        <button class="btn btn-outline-danger" disabled>Out of Stock</button>
+                                                    @endif
                                                     <a href="{{ route('wishlist.store', $product->id) }}"
                                                         class="btn btn-outline-primary" type="button">Add to Wishlist</a>
                                                 </div>
@@ -321,101 +326,35 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @push('front_script')
+        <script>
+            $("#add_cart_form").submit(function(e) {
+                e.preventDefault();
+                let url = $(this).attr('action');
+                let request = $(this).serialize();
 
-                    <!-- Brands -->
+                $("button[type=submit]").attr('disabled', true);
 
-                    <div class="brands">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="brands_slider_container">
-
-                                        <!-- Brands Slider -->
-
-                                        <div class="owl-carousel owl-theme brands_slider">
-
-                                            <div class="owl-item">
-                                                <div class="brands_item d-flex flex-column justify-content-center">
-                                                    <img src="{{ asset('public/frontend') }}/images/brands_1.jpg" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="owl-item">
-                                                <div class="brands_item d-flex flex-column justify-content-center">
-                                                    <img src="{{ asset('public/frontend') }}/images/brands_2.jpg" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="owl-item">
-                                                <div class="brands_item d-flex flex-column justify-content-center">
-                                                    <img src="{{ asset('public/frontend') }}/images/brands_3.jpg" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="owl-item">
-                                                <div class="brands_item d-flex flex-column justify-content-center">
-                                                    <img src="{{ asset('public/frontend') }}/images/brands_4.jpg" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="owl-item">
-                                                <div class="brands_item d-flex flex-column justify-content-center">
-                                                    <img src="{{ asset('public/frontend') }}/images/brands_5.jpg" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="owl-item">
-                                                <div class="brands_item d-flex flex-column justify-content-center">
-                                                    <img src="{{ asset('public/frontend') }}/images/brands_6.jpg" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="owl-item">
-                                                <div class="brands_item d-flex flex-column justify-content-center">
-                                                    <img src="{{ asset('public/frontend') }}/images/brands_7.jpg" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="owl-item">
-                                                <div class="brands_item d-flex flex-column justify-content-center">
-                                                    <img src="{{ asset('public/frontend') }}/images/brands_8.jpg" alt="">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <!-- Brands Slider Navigation -->
-                                        <div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i>
-                                        </div>
-                                        <div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Newsletter -->
-
-                    <div class="newsletter">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div
-                                        class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
-                                        <div class="newsletter_title_container">
-                                            <div class="newsletter_icon"><img
-                                                    src="{{ asset('public/frontend') }}/images/send.png" alt=""></div>
-                                            <div class="newsletter_title">Sign up for Newsletter</div>
-                                            <div class="newsletter_text">
-                                                <p>...and receive %20 coupon for first shopping.</p>
-                                            </div>
-                                        </div>
-                                        <div class="newsletter_content clearfix">
-                                            <form action="#" class="newsletter_form">
-                                                <input type="email" class="newsletter_input" required="required"
-                                                    placeholder="Enter your email address">
-                                                <button class="newsletter_button">Subscribe</button>
-                                            </form>
-                                            <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endsection
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    data: request,
+                    success: function(data) {
+                        toastr.success(data);
+                        $("#add_cart_form")[0].reset();
+                        $("button[type=submit]").attr('disabled', false);
+                        cart();
+                    },
+                    error: function(error) {
+                        $("button[type=submit]").attr('disabled', false);
+                    }
+                });
+            });
+        </script>
+    @endpush
+@endsection

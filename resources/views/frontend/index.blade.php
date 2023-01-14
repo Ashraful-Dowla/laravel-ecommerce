@@ -196,7 +196,10 @@
                                                                 quick view</i>
                                                             </a>
                                                         </div>
-                                                        <button class="product_cart_button">Add to Cart</button>
+                                                        <button class="product_cart_button" data-toggle="modal"
+                                                            data-target="#quickViewProductModal"
+                                                            onclick="getProductById(`{{ $row->id }}`)">Add to
+                                                            Cart</button>
                                                     </div>
                                                 </div>
                                                 <a href="{{ route('wishlist.store', $row->id) }}">
@@ -253,7 +256,10 @@
                                                                 quick view</i>
                                                             </a>
                                                         </div>
-                                                        <button class="product_cart_button">Add to Cart</button>
+                                                        <button class="product_cart_button" data-toggle="modal"
+                                                            data-target="#quickViewProductModal"
+                                                            onclick="getProductById(`{{ $row->id }}`)">Add to
+                                                            Cart</button>
                                                     </div>
                                                 </div>
                                                 <a href="{{ route('wishlist.store', $row->id) }}">
@@ -488,7 +494,10 @@
                                                                         quick view</i>
                                                                     </a>
                                                                 </div>
-                                                                <button class="product_cart_button">Add to Cart</button>
+                                                                <button class="product_cart_button" data-toggle="modal"
+                                                                    data-target="#quickViewProductModal"
+                                                                    onclick="getProductById(`{{ $row->id }}`)">Add to
+                                                                    Cart</button>
                                                             </div>
                                                         </div>
                                                         <a href="{{ route('wishlist.store', $row->id) }}">
@@ -1655,7 +1664,8 @@
                                 <div class="review d-flex flex-row align-items-start justify-content-start">
                                     <div>
                                         <div class="review_image"><img
-                                                src="{{ asset('public/frontend') }}/images/review_1.jpg" alt="">
+                                                src="{{ asset('public/frontend') }}/images/review_1.jpg"
+                                                alt="">
                                         </div>
                                     </div>
                                     <div class="review_content">

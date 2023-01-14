@@ -35,5 +35,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     Route::post('/review/store', 'ReviewController@store')->name('review.store');
 
     //wishlist
+    Route::get('/wishlist', 'WishlistController@index')->name('wishlist.index');
     Route::get('/wishlist/store/{id}', 'WishlistController@store')->name('wishlist.store');
+    Route::get('/wishlist/delete', 'WishlistController@destroy')->name('wishlist.destroy');
+    Route::get('/wishlist/delete/{id}', 'WishlistController@destroy_by_id')->name('wishlist.destroy.id');
 });

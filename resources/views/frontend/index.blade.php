@@ -41,7 +41,7 @@
                 @foreach ($brands as $row)
                     <div class="col-lg-2 col-md-6 char_col" style="border: 1px solid grey; padding: 5px;">
                         <div class="brands_item d-flex flex-column justify-content-center text-center">
-                            <a href="#" title="{{ $row->brand_name }}">
+                            <a href="{{ route('brandwise.product', $row->id) }}" title="{{ $row->brand_name }}">
                                 <img src="{{ asset($row->brand_logo) }}" alt="{{ $row->brand_name }}" height="90%"
                                     width="70%">
                             </a>
@@ -314,7 +314,10 @@
                                         <div class="popular_category_image"><img src="{{ asset($row->category_icon) }}"
                                                 alt="{{ $row->category_name }}">
                                         </div>
-                                        <div class="popular_category_text">{{ $row->category_name }}</div>
+                                        <div class="popular_category_text">
+                                            <a
+                                                href="{{ route('categorywise.product', $row->id) }}">{{ $row->category_name }}</a>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -1881,7 +1884,8 @@
                             @foreach ($brands as $row)
                                 <div class="owl-item">
                                     <div class="brands_item d-flex flex-column justify-content-center">
-                                        <a href="#" title="{{ $row->brand_name }}">
+                                        <a href="{{ route('brandwise.product', $row->id) }}"
+                                            title="{{ $row->brand_name }}">
                                             <img src="{{ asset($row->brand_logo) }}" alt="{{ $row->brand_name }}"
                                                 height="50" width="40">
                                         </a>

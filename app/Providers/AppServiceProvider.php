@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use DB;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use View;
 
@@ -28,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
         //
         $setting = DB::table('settings')->first();
         View::share('setting', $setting);
+        Paginator::useBootstrap();
     }
 }

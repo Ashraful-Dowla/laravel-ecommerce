@@ -15,12 +15,12 @@
                          </div>
 
                          <ul class="cat_menu">
-                            @php
-                                $categories = \App\Models\Category::all();
-                            @endphp
+                             @php
+                                 $categories = \App\Models\Category::all();
+                             @endphp
                              @foreach ($categories as $category)
                                  <li class="hassubs">
-                                     <a href="#">
+                                     <a href="{{ route('categorywise.product', $category->id) }}">
                                          <img src="{{ asset($category->category_icon) }}" height="18"
                                              width="18">&nbsp;{{ $category->category_name }}<i
                                              class="fas fa-chevron-right"></i>
@@ -31,14 +31,15 @@
                                          @endphp
                                          @foreach ($subcategories as $subcategory)
                                              <li class="hassubs">
-                                                 <a href="#">{{ $subcategory->subcategory_name }}<i
+                                                 <a href="{{ route('subcategorywise.product', $subcategory->id) }}">{{ $subcategory->subcategory_name }}<i
                                                          class="fas fa-chevron-right"></i></a>
                                                  <ul>
                                                      @php
                                                          $childcategories = \App\Models\Childcategory::where('subcategory_id', $subcategory->id)->get();
                                                      @endphp
                                                      @foreach ($childcategories as $childcategory)
-                                                         <li><a href="#">{{ $childcategory->childcategory_name }}<i
+                                                         <li><a
+                                                                 href="{{ route('childcategorywise.product', $childcategory->id) }}">{{ $childcategory->childcategory_name }}<i
                                                                      class="fas fa-chevron-right"></i></a>
                                                          </li>
                                                      @endforeach

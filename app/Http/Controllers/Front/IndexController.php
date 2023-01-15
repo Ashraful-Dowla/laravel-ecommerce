@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Childcategory;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Subcategory;
 use App\Models\Wishlist;
 use Auth;
 
@@ -50,5 +52,57 @@ class IndexController extends Controller
     {
         $product = Product::where('id', $id)->first();
         return view('frontend.product.product_quick_view', compact('product'));
+    }
+
+    //categorywise product
+    public function categoryWiseProduct($id)
+    {
+        $category = Category::where('id', $id)->first();
+        $subcategories = Subcategory::where('category_id', $id)->get();
+        $brands = Brand::all();
+        $categorywise_products = Product::where('category_id', $id)->paginate(10);
+        $random_products = Product::where('product_status', 1)->inRandomOrder()->limit(16)->get();
+
+        return view('frontend.product.categorywise_products', compact('category', 'subcategories',
+            'brands', 'categorywise_products', 'random_products'));
+    }
+
+    //subcategorywise product
+    public function subcategoryWiseProduct($id)
+    {
+        $subcategory = Subcategory::where('id', $id)->first();
+        $childcategories = Childcategory::where('subcategory_id', $id)->get();
+        $brands = Brand::all();
+        $categorywise_products = Product::where('subcategory_id', $id)->paginate(10);
+        $random_products = Product::where('product_status', 1)->inRandomOrder()->limit(16)->get();
+
+        return view('frontend.product.subcategorywise_products', compact('subcategory', 'childcategories',
+            'brands', 'categorywise_products', 'random_products'));
+    }
+
+    //childcategorywise product
+    public function childcategoryWiseProduct($id)
+    {
+        $childcategory = Childcategory::where('id', $id)->first();
+        $categories = Category::all();
+        $brands = Brand::all();
+        $categorywise_products = Product::where('childcategory_id', $id)->paginate(10);
+        $random_products = Product::where('product_status', 1)->inRandomOrder()->limit(16)->get();
+
+        return view('frontend.product.childcategorywise_products', compact('childcategory', 'categories',
+            'brands', 'categorywise_products', 'random_products'));
+    }
+
+    //brandwise product
+    public function brandWiseProduct($id)
+    {
+        $brand = Brand::where('id', $id)->first();
+        $categories = Category::all();
+        $brands = Brand::all();
+        $categorywise_products = Product::where('brand_id', $id)->paginate(10);
+        $random_products = Product::where('product_status', 1)->inRandomOrder()->limit(16)->get();
+
+        return view('frontend.product.brandwise_products', compact('brand', 'categories',
+            'brands', 'categorywise_products', 'random_products'));
     }
 }

@@ -14,7 +14,7 @@
                 <li class="list-group-item"> <i class="fas fa-file-alt"></i> My Order</li>
             </a>
 
-            <a href="#" class="text-muted">
+            <a href="{{ route('customer.profile.setting') }}" class="text-muted">
                 <li class="list-group-item"><i class="fas fa-edit"></i> Setting</li>
             </a>
             <a href="#" class="text-muted">

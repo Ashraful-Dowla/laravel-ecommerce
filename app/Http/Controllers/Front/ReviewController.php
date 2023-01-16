@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -37,6 +38,30 @@ class ReviewController extends Controller
             'review_date' => date('d-m-Y'),
             'review_month' => date('F'),
             'review_year' => date('Y'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $notification = array('message' => 'Thanks for your review', 'alert_type' => 'success');
+        return back()->with($notification);
+    }
+
+    //website review
+    public function website()
+    {
+        return view('user.review_website');
+    }
+
+    //websiter review store
+    public function website_review_store(Request $request)
+    {
+        DB::table('website_reviews')->insert([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'website_review_description' => $request->website_review_description,
+            'website_review_rating' => $request->website_review_rating,
+            'website_review_date' => date('d, F Y'),
+            'website_review_status' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

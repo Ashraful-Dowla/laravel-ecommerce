@@ -33,6 +33,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
 
     //review
     Route::post('/review/store', 'ReviewController@store')->name('review.store');
+    Route::get('/review/website', 'ReviewController@website')->name('review.website');
+    Route::post('/review/website/store', 'ReviewController@website_review_store')->name('review.website.store');
 
     //wishlist
     Route::get('/wishlist', 'WishlistController@index')->name('wishlist.index');

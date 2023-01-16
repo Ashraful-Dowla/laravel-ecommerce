@@ -11,6 +11,7 @@ use App\Models\Review;
 use App\Models\Subcategory;
 use App\Models\Wishlist;
 use Auth;
+use DB;
 
 class IndexController extends Controller
 {
@@ -30,9 +31,11 @@ class IndexController extends Controller
 
         $today_deal_products = Product::where('product_status', 1)->where('product_today_deal', 1)->orderBy('id')->limit(6)->get();
 
+        $website_reviews = DB::table('website_reviews')->where('website_review_status', 1)->orderBy('id', 'desc')->limit(12)->get();
+
         return view('frontend.index', compact('categories', 'banner_product',
             'featured_products', 'wishlist_count', 'popular_products',
-            'trendy_products', 'home_category', 'brands', 'random_products', 'today_deal_products'));
+            'trendy_products', 'home_category', 'brands', 'random_products', 'today_deal_products', 'website_reviews'));
     }
 
     // single product view

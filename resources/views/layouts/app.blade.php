@@ -89,7 +89,7 @@
                                                     {{ Auth::user()->name }}
                                                 </a>
                                                 <ul>
-                                                    <li><a href="#">Profile</a></li>
+                                                    <li><a href="{{ route('home') }}">Profile</a></li>
                                                     <li><a href="#">Order List</a></li>
                                                     <li><a href="#">Setting</a></li>
                                                     <li><a href="{{ route('customer.logout') }}">Logout</a></li>

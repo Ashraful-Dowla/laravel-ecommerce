@@ -53,5 +53,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     Route::post('/customer/password/change', 'ProfileController@password_change')->name('customer.password.change');
 
     //page view
-    Route::get('/page/view/{slug}', 'IndexController@pageView')->name('page.view');
+    Route::get('/page/view/{slug}', 'IndexController@page_view')->name('page.view');
+
+    //newsletter
+    Route::post('/newsletter/store', 'IndexController@newsletter_store')->name('newsletter.store');
 });

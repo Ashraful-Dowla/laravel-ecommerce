@@ -12,6 +12,7 @@ use App\Models\Subcategory;
 use App\Models\Wishlist;
 use Auth;
 use DB;
+use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
@@ -110,9 +111,30 @@ class IndexController extends Controller
     }
 
     //page view
-    public function pageView($slug)
+    public function page_view($slug)
     {
         $page = DB::table('pages')->where('page_slug', $slug)->first();
         return view('frontend.page', compact('page'));
     }
+
+    //newsletter store
+    public function newsletter_store(Request $request)
+    {
+        $email = $request->email;
+
+        $check = DB::table('newsletters')->where('email', $email)->first();
+
+        if ($check) {
+            return response()->json("Email Already Exists");
+        }
+
+        DB::table('newsletters')->insert([
+            'email' => $request->email,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json("Thanks for subscribe us!");
+    }
+
 }

@@ -1806,12 +1806,13 @@
                             </div>
                         </div>
                         <div class="newsletter_content clearfix">
-                            <form action="#" class="newsletter_form">
+                            <form action="{{ route('newsletter.store') }}" class="newsletter_form"
+                                id="newsletter_form">
+                                @csrf
                                 <input type="email" class="newsletter_input" required="required"
-                                    placeholder="Enter your email address">
-                                <button class="newsletter_button">Subscribe</button>
+                                    placeholder="Enter your email address" name="email" required>
+                                <button class="newsletter_button" type="submit">Subscribe</button>
                             </form>
-                            <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
                         </div>
                     </div>
                 </div>
@@ -1847,6 +1848,29 @@
                     }
                 });
             }
+
+            $("#newsletter_form").submit(function(e) {
+                e.preventDefault();
+                let url = $(this).attr('action');
+                let request = $(this).serialize();
+
+                $("button[type=submit]").attr('disabled', true);
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    async: false,
+                    data: request,
+                    success: function(data) {
+                        toastr.success(data);
+                        $("#newsletter_form")[0].reset();
+                        $("button[type=submit]").attr('disabled', false);
+                    },
+                    error: function(error) {
+                        $("button[type=submit]").attr('disabled', false);
+                    }
+                });
+            });
         </script>
     @endpush
 @endsection

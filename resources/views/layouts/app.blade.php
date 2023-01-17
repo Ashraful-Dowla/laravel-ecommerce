@@ -192,6 +192,15 @@
         <!-- Footer -->
 
         <footer class="footer">
+            @php
+                $page_1 = DB::table('pages')
+                    ->where('page_position', 1)
+                    ->get();
+
+                $page_2 = DB::table('pages')
+                    ->where('page_position', 2)
+                    ->get();
+            @endphp
             <div class="container">
                 <div class="row">
 
@@ -208,11 +217,16 @@
                             </div>
                             <div class="footer_social">
                                 <ul>
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-google"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+                                    <li><a href="{{ $setting->facebook }}" target="_blank"><i
+                                                class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="{{ $setting->twitter }}" target="_blank"><i
+                                                class="fab fa-twitter"></i></a></li>
+                                    <li><a href="{{ $setting->youtube }}" target="_blank"><i
+                                                class="fab fa-youtube"></i></a></li>
+                                    <li><a href="{{ $setting->instagram }}" target="_blank"><i
+                                                class="fab fa-instagram"></i></a></li>
+                                    <li><a href="{{ $setting->linkedin }}" target="_blank"><i
+                                                class="fab fa-linkedin"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -222,15 +236,10 @@
                         <div class="footer_column">
                             <div class="footer_title">Find it Fast</div>
                             <ul class="footer_list">
-                                <li><a href="#">Computers & Laptops</a></li>
-                                <li><a href="#">Cameras & Photos</a></li>
-                                <li><a href="#">Hardware</a></li>
-                                <li><a href="#">Smartphones & Tablets</a></li>
-                                <li><a href="#">TV & Audio</a></li>
-                            </ul>
-                            <div class="footer_subtitle">Gadgets</div>
-                            <ul class="footer_list">
-                                <li><a href="#">Car Electronics</a></li>
+                                @foreach ($page_1 as $row)
+                                    <li><a href="{{ route('page.view', $row->page_slug) }}">{{ $row->page_name }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -238,11 +247,10 @@
                     <div class="col-lg-2">
                         <div class="footer_column">
                             <ul class="footer_list footer_list_2">
-                                <li><a href="#">Video Games & Consoles</a></li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">Cameras & Photos</a></li>
-                                <li><a href="#">Hardware</a></li>
-                                <li><a href="#">Computers & Laptops</a></li>
+                                @foreach ($page_2 as $row)
+                                    <li><a href="{{ route('page.view', $row->page_slug) }}">{{ $row->page_name }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -254,10 +262,9 @@
                                 <li><a href="#">My Account</a></li>
                                 <li><a href="#">Order Tracking</a></li>
                                 <li><a href="#">Wish List</a></li>
-                                <li><a href="#">Customer Services</a></li>
-                                <li><a href="#">Returns / Exchange</a></li>
-                                <li><a href="#">FAQs</a></li>
-                                <li><a href="#">Product Support</a></li>
+                                <li><a href="#">Our Blog</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">Become a vendor</a></li>
                             </ul>
                         </div>
                     </div>

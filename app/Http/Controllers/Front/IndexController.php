@@ -108,4 +108,11 @@ class IndexController extends Controller
         return view('frontend.product.brandwise_products', compact('brand', 'categories',
             'brands', 'categorywise_products', 'random_products'));
     }
+
+    //page view
+    public function pageView($slug)
+    {
+        $page = DB::table('pages')->where('page_slug', $slug)->first();
+        return view('frontend.page', compact('page'));
+    }
 }

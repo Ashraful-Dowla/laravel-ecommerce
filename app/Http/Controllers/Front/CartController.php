@@ -79,4 +79,6 @@ class CartController extends Controller
         $notification = array('message' => 'Cart Item cleared', 'alert_type' => 'success');
         return back()->with($notification);
     }
+
+
 }

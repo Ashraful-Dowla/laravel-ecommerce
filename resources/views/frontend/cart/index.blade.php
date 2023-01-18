@@ -118,7 +118,7 @@
                             <div class="cart_buttons">
                                 <a href="{{ route('cart.destroy') }}" class="button cart_button_clear text-danger">Cart
                                     Empty</a>
-                                <button type="button" class="button cart_button_checkout">Add to Cart</button>
+                                <a href="{{ route('checkout.index') }}" class="button cart_button_checkout">Checkout</a>
                             </div>
                         @endif
                     </div>

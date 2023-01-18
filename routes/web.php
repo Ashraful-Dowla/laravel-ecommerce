@@ -31,6 +31,12 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     Route::delete('/cart/product/remove/{rowId}', 'CartController@remove')->name('cart.product.remove');
     Route::post('/cart/product/update/{rowId}', 'CartController@update')->name('cart.product.update');
 
+    //checkout
+    Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+    Route::post('/coupon/apply', 'CheckoutController@coupon_apply')->name('coupon.apply');
+    Route::get('/coupon/remove', 'CheckoutController@coupon_remove')->name('coupon.remove');
+    Route::post('/order/place', 'CheckoutController@order_place')->name('order.place');
+
     //review
     Route::post('/review/store', 'ReviewController@store')->name('review.store');
     Route::get('/review/website', 'ReviewController@website')->name('review.website');

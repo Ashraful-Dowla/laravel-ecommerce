@@ -40,7 +40,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
     //admin login
     public function adminLogin()
     {
@@ -59,7 +58,9 @@ class LoginController extends Controller
                 return redirect()->route('admin.home');
             }
 
-            return redirect()->route('home');
+            $prev_link = session()->has('prev_links') ? session('prev_links') : 'home';
+            session()->forget('prev_links');
+            return redirect()->route($prev_link);
         }
 
         return redirect()->back()->with('error', 'Invalid email or password');

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Auth;
 use DB;
 use Hash;
-use App\Models\User;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -42,5 +42,15 @@ class ProfileController extends Controller
             $notification = array('message' => 'Current Password does not match', 'alert_type' => 'error');
             return back()->with($notification);
         }
+    }
+
+    public function my_order()
+    {
+        $orders = DB::table('orders')->where('user_id', Auth::id())
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return view('user.my_order', compact('orders'));
+
     }
 }

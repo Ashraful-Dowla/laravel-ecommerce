@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InvoiceMail;
 use Auth;
 use Cart;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Session;
 
 class CheckoutController extends Controller
@@ -108,6 +110,8 @@ class CheckoutController extends Controller
             $order_data['coupon_discount'] = Session::get('coupon')['discount'];
             $order_data['after_discount'] = Session::get('coupon')['after_discount'];
         }
+
+        Mail::to($request->c_email)->send(new InvoiceMail($order_data));
 
         $order_id = DB::table('orders')->insertGetId($order_data);
 

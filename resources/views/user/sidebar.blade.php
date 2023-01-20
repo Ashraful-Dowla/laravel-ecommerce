@@ -17,7 +17,7 @@
             <a href="{{ route('customer.profile.setting') }}" class="text-muted">
                 <li class="list-group-item"><i class="fas fa-edit"></i> Setting</li>
             </a>
-            <a href="#" class="text-muted">
+            <a href="{{ route('ticket.open') }}" class="text-muted">
                 <li class="list-group-item"> <i class="fab fa-telegram-plane"></i> Open Ticket</li>
             </a>
             <a href="{{ route('customer.logout') }}" class="text-muted">

@@ -64,4 +64,10 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
 
     //newsletter
     Route::post('/newsletter/store', 'IndexController@newsletter_store')->name('newsletter.store');
+
+    //support ticket
+    Route::get('/ticket/open', 'ProfileController@ticket_open')->name('ticket.open');
+    Route::get('/ticket/new', 'ProfileController@ticket_new')->name('ticket.new');
+    Route::post('/ticket/store', 'ProfileController@ticket_store')->name('ticket.store');
+    Route::get('/ticket/show/{id}', 'ProfileController@ticket_show')->name('ticket.show');
 });

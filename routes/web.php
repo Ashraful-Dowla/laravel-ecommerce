@@ -70,4 +70,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     Route::get('/ticket/new', 'ProfileController@ticket_new')->name('ticket.new');
     Route::post('/ticket/store', 'ProfileController@ticket_store')->name('ticket.store');
     Route::get('/ticket/show/{id}', 'ProfileController@ticket_show')->name('ticket.show');
+    Route::post('/reply/ticket', 'ProfileController@ticket_reply')->name('reply.ticket');
 });

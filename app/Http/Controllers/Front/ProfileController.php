@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Auth;
 use DB;
+use Auth;
 use Hash;
-use Illuminate\Http\Request;
 use Image;
+use App\Models\User;
+use App\Models\Reply;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {
@@ -100,6 +101,34 @@ class ProfileController extends Controller
     {
         $ticket = DB::table('tickets')->where('id', $id)->first();
         return view('user.ticket_show', compact('ticket'));
+    }
+
+    public function ticket_reply(Request $request)
+    {
+        $request->validate([
+            'message' => 'required',
+            'image' => 'mimes:jpeg,jpg,png,gif|max:1000',
+        ]);
+
+        $photo_file_path = null;
+        if ($request->has('image')) {
+            $photo = $request->image;
+            $photoname = uniqid() . '.' . $photo->getClientOriginalExtension();
+            $photo_file_path = "public/files/ticket/" . $photoname;
+            Image::make($photo)->resize(240, 120)->save($photo_file_path);
+        }
+
+        Reply::insert([
+            'message' => $request->message,
+            'image' => $photo_file_path,
+            'user_id' => Auth::id(),
+            'ticket_id' => $request->ticket_id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $notification = array('message' => 'Ticket Replied', 'alert_type' => 'success');
+        return back()->with($notification);
     }
 
 }

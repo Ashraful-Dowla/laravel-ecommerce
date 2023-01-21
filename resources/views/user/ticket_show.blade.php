@@ -24,20 +24,19 @@
 
                 {{-- All reply message show here --}}
                 @php
-                    $replies = DB::table('replies')
-                        ->where('ticket_id', $ticket->id)
+                    $replies = \App\Models\Reply::where('ticket_id', $ticket->id)
                         ->orderBy('id', 'DESC')
                         ->get();
                 @endphp
 
                 <div class="card p-2 mt-2">
                     <strong>All Reply Message.</strong><br>
-                    <div class="card-body" style="height: 200px; overflow-y: scroll;">
+                    <div class="card-body" style="height: 400px; overflow-y: scroll;">
                         @foreach ($replies as $row)
-                            <div class="card mt-1 @if ($row->user_id == 0) ml-4 @endif">
-                                <div class="card-header @if ($row->user_id == 0) bg-info @else bg-danger @endif ">
+                            <div class="card mt-1 @if ($row->user->is_admin == 1) ml-4 @endif">
+                                <div class="card-header @if ($row->user->is_admin == 1) bg-info @else bg-danger @endif ">
                                     <i class="fa fa-user"></i>
-                                    @if ($row->user_id == 0)
+                                    @if ($row->user->is_admin == 1)
                                         Admin
                                     @else
                                         {{ Auth::user()->name }}
@@ -59,7 +58,7 @@
                     <div class="card-body">
                         <strong>Reply Message.</strong><br>
                         <div>
-                            <form action="#" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('reply.ticket') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Message</label>

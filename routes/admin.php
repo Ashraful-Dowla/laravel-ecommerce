@@ -104,6 +104,17 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update/{id}', 'PickupController@update')->name('pickup.point.update');
     });
 
+    //ticket
+    Route::group(['prefix' => 'ticket'], function () {
+        Route::get('/', 'TicketController@index')->name('ticket.index');
+        Route::get('/list', 'TicketController@list')->name('ticket.list');
+        Route::get('/view/{id}', 'TicketController@view')->name('ticket.view');
+        Route::post('/reply', 'TicketController@reply')->name('ticket.reply');
+        // Route::delete('/delete/{id}', 'PickupController@destroy')->name('pickup.point.delete');
+        // Route::get('/edit/{id}', 'PickupController@edit')->name('pickup.point.edit');
+        // Route::post('/update/{id}', 'PickupController@update')->name('pickup.point.update');
+    });
+
     //setting
     Route::group(['prefix' => 'setting'], function () {
 

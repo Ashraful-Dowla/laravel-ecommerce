@@ -29,35 +29,33 @@
     @stack('css')
 </head>
 
-<body>
-    <div class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-        <div class="wrapper">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="wrapper">
 
-            <!-- Preloader -->
-            <div class="preloader flex-column justify-content-center align-items-center">
-                <img class="animation__wobble" src="{{ asset('public/backend') }}/dist/img/AdminLTELogo.png"
-                    alt="AdminLTELogo" height="60" width="60">
-            </div>
-
-            @auth
-                <!-- Navbar -->
-                @include('layouts.partial.admin.navbar')
-                <!-- /.navbar -->
-
-                <!-- Main Sidebar Container -->
-                @include('layouts.partial.admin.sidebar')
-            @endauth
-
-            <!-- Content Wrapper. Contains page content -->
-            @yield('admin_content')
-            <!-- /.content-wrapper -->
-
-            <!-- Control Sidebar -->
-            <aside class="control-sidebar control-sidebar-dark">
-                <!-- Control sidebar content goes here -->
-            </aside>
-            <!-- /.control-sidebar -->
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__wobble" src="{{ asset('public/backend') }}/dist/img/AdminLTELogo.png"
+                alt="AdminLTELogo" height="60" width="60">
         </div>
+
+        @auth
+            <!-- Navbar -->
+            @include('layouts.partial.admin.navbar')
+            <!-- /.navbar -->
+
+            <!-- Main Sidebar Container -->
+            @include('layouts.partial.admin.sidebar')
+        @endauth
+
+        <!-- Content Wrapper. Contains page content -->
+        @yield('admin_content')
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
     </div>
 
     <!-- ./wrapper -->
@@ -82,9 +80,11 @@
     <script src="{{ asset('public/backend') }}/plugins/chart.js/Chart.min.js"></script>
 
     <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset('public/backend') }}/dist/js/demo.js"></script>
+    {{-- <script src="{{ asset('public/backend') }}/dist/js/demo.js"></script> --}}
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('public/backend') }}/dist/js/pages/dashboard2.js"></script>
+    @if (Route::currentRouteName() == 'admin.home')
+        <script src="{{ asset('public/backend') }}/dist/js/pages/dashboard2.js"></script>
+    @endif
     <script src="{{ asset('public/backend') }}/plugins/toastr/toastr.min.js"></script>
     <script src="{{ asset('public/backend') }}/plugins/sweetalert/sweetalert.min.js"></script>
     <!-- DataTables  & Plugins -->

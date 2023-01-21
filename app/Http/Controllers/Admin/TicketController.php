@@ -34,7 +34,7 @@ class TicketController extends Controller
 
         if ($request->ajax()) {
 
-            $tickets = Ticket::when($status, function ($query) use ($status) {
+            $tickets = Ticket::when($status != null, function ($query) use ($status) {
                 return $query->where('status', $status);
             })->when($date, function ($query) use ($date) {
                 return $query->where('date', $date);
@@ -92,7 +92,27 @@ class TicketController extends Controller
             'updated_at' => now(),
         ]);
 
+        Ticket::where('id', $request->ticket_id)->update([
+            'status' => 1,
+        ]);
+
         $notification = array('message' => 'Ticket Replied', 'alert_type' => 'success');
         return back()->with($notification);
+    }
+
+    public function close($id)
+    {
+        Ticket::where('id', $id)->update([
+            'status' => 2,
+        ]);
+
+        $notification = array('message' => 'Ticket Closed', 'alert_type' => 'success');
+        return redirect()->route('ticket.index')->with($notification);
+    }
+
+    public function destroy($id)
+    {
+        Ticket::destroy($id);
+        return response()->json('Ticket Deleted');
     }
 }

@@ -110,9 +110,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::get('/list', 'TicketController@list')->name('ticket.list');
         Route::get('/view/{id}', 'TicketController@view')->name('ticket.view');
         Route::post('/reply', 'TicketController@reply')->name('ticket.reply');
-        // Route::delete('/delete/{id}', 'PickupController@destroy')->name('pickup.point.delete');
-        // Route::get('/edit/{id}', 'PickupController@edit')->name('pickup.point.edit');
-        // Route::post('/update/{id}', 'PickupController@update')->name('pickup.point.update');
+        Route::get('/close/{id}', 'TicketController@close')->name('ticket.close');
+        Route::delete('/delete/{id}', 'TicketController@destroy')->name('ticket.delete');
     });
 
     //setting

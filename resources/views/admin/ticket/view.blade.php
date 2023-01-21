@@ -77,7 +77,9 @@
                                 <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
-                            <a href="#" class="btn btn-danger" style="float:right;"> Close Ticket </a>
+                            <a href="{{ route('ticket.close', $ticket->id) }}" class="btn btn-danger" style="float:right;">
+                                Close Ticket
+                            </a>
                         </div>
                 </form>
 

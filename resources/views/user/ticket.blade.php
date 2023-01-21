@@ -35,18 +35,16 @@
                                             <td> {{ $row->subject }}</td>
                                             <td>
                                                 @if ($row->status == 0)
-                                                    <span class="badge badge-danger">Pending</span>
+                                                    <span class="badge badge-warning">Pending</span>
                                                 @elseif($row->status == 1)
                                                     <span class="badge badge-success">Replied</span>
                                                 @elseif($row->status == 2)
-                                                    <span class="badge badge-muted">Closed</span>
+                                                    <span class="badge badge-danger">Closed</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <a href="{{ route('ticket.show', $row->id) }}"
                                                     class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-                                                <a href="#" class="btn btn-sm btn-danger"><i
-                                                        class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @empty

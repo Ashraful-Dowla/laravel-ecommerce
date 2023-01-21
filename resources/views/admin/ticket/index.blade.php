@@ -67,10 +67,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <form id="delete_product" action="" method="delete">
-                                @csrf
-                                @method('DELETE')
-                            </form>
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
@@ -144,8 +140,8 @@
             })
         </script>
         <script>
-            function deleteProductById(id) {
-                let url = "{{ route('product.delete', ':id') }}";
+            function deleteTicket(id) {
+                let url = "{{ route('ticket.delete', ':id') }}";
                 url = url.replace(':id', id);
 
                 swal({
@@ -167,7 +163,6 @@
                                 success: function(data) {
                                     toastr.success(data);
                                     table.ajax.reload();
-                                    $("#delete_product")[0].reset();
                                 }
                             })
                         } else {

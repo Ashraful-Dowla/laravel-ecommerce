@@ -72,4 +72,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     Route::post('/ticket/store', 'ProfileController@ticket_store')->name('ticket.store');
     Route::get('/ticket/show/{id}', 'ProfileController@ticket_show')->name('ticket.show');
     Route::post('/reply/ticket', 'ProfileController@ticket_reply')->name('reply.ticket');
+
+    //order track
+    Route::get('/order/track/', 'IndexController@order_tracking')->name('order.tracking');
+    Route::post('/order/track/check', 'IndexController@order_check')->name('order.check');
 });

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Front;
 
-use DB;
-use Auth;
-use Hash;
-use Image;
-use App\Models\User;
-use App\Models\Reply;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Reply;
+use App\Models\User;
+use Auth;
+use DB;
+use Hash;
+use Illuminate\Http\Request;
+use Image;
 
 class ProfileController extends Controller
 {
@@ -129,6 +129,17 @@ class ProfileController extends Controller
 
         $notification = array('message' => 'Ticket Replied', 'alert_type' => 'success');
         return back()->with($notification);
+    }
+
+    public function my_order_view($id)
+    {
+        $order = DB::table('orders')->where('user_id', Auth::id())
+            ->where('id', $id)
+            ->first();
+
+        $order_details = DB::table('order_details')->where('order_id', $order->id)->get();
+
+        return view('user.order_details', compact('order', 'order_details'));
     }
 
 }

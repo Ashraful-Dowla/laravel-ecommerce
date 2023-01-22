@@ -58,6 +58,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     Route::get('/customer/profile/setting', 'ProfileController@index')->name('customer.profile.setting');
     Route::post('/customer/password/change', 'ProfileController@password_change')->name('customer.password.change');
     Route::get('/my-order', 'ProfileController@my_order')->name('my.order');
+    Route::get('/my-order/view/{id}', 'ProfileController@my_order_view')->name('my.order.view');
 
     //page view
     Route::get('/page/view/{slug}', 'IndexController@page_view')->name('page.view');

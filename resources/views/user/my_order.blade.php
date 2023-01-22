@@ -32,7 +32,7 @@
                                     @foreach ($orders as $row)
                                         <tr>
                                             <th scope="row">{{ $row->order_id }}</th>
-                                            <td>{{ date('d F , Y') }}</td>
+                                            <td>{{ date('d F , Y', strtotime($row->date)) }}</td>
                                             <td> {{ $setting->currency }} {{ $row->total }}</td>
                                             <td>{{ $row->payment_type }}</td>
                                             <td>
@@ -51,7 +51,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                                <a href="{{ route('my.order.view', $row->id) }}" class="btn btn-info"><i
+                                                        class="fa fa-eye"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -168,7 +168,7 @@
     <script>
         $(function() {
             $('.sidebar-mini').addClass('sidebar-open');
-            $('.nav-item').click(function() {
+            $('#nav-item-mini').click(function() {
                 if ($('.sidebar-mini').hasClass('sidebar-open')) {
                     $('.sidebar-mini').removeClass('sidebar-open');
                     $('.sidebar-mini').addClass('sidebar-closed sidebar-collapse');
@@ -177,6 +177,12 @@
                     $('.sidebar-mini').addClass('sidebar-open');
                 }
             });
+
+            $('.nav-item').click(function() {
+                $id = $(this).attr('id');
+                $("#navabar-menu > .nav-item").removeClass('menu-open');
+                $("#navabar-menu > .nav-item #" + $id).addClass('menu-open');
+            })
         });
     </script>
 </body>

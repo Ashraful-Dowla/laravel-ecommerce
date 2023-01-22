@@ -164,6 +164,21 @@
             }
         @endif
     </script>
+
+    <script>
+        $(function() {
+            $('.sidebar-mini').addClass('sidebar-open');
+            $('.nav-item').click(function() {
+                if ($('.sidebar-mini').hasClass('sidebar-open')) {
+                    $('.sidebar-mini').removeClass('sidebar-open');
+                    $('.sidebar-mini').addClass('sidebar-closed sidebar-collapse');
+                } else {
+                    $('.sidebar-mini').removeClass('sidebar-closed sidebar-collapse');
+                    $('.sidebar-mini').addClass('sidebar-open');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

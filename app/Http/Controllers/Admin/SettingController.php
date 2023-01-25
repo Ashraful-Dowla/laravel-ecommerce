@@ -108,6 +108,28 @@ class SettingController extends Controller
         return back()->with($notification);
     }
 
+    //payment gateway
+    public function payment_gateway()
+    {
+        $aamar_pay = DB::table('payment_gateway_bd')->where('gateway_name', 'Aamarpay')->first();
+        return view('admin.payment_gateway.edit', compact('aamar_pay'));
+    }
+
+    //payment gateway update
+    public function payment_gateway_update(Request $request, $id)
+    {
+        $status = $request->has('status') ? 1 : 0;
+        DB::table('payment_gateway_bd')->where('id', $id)->update([
+            'store_id' => $request->store_id,
+            'signature_key' => $request->signature_key,
+            'status' => $status,
+            'updated_at' => now(),
+        ]);
+
+        $notification = array('message' => 'Payment Gateway Updated', 'alert_type' => 'success');
+        return back()->with($notification);
+    }
+
     protected function websiteSettingFile($file_path, $photo, $width, $height)
     {
         if (File::exists($file_path)) {

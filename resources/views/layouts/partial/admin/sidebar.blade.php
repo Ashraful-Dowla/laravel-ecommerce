@@ -111,7 +111,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="offer">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
@@ -134,7 +134,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="pickup_point">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
@@ -151,7 +151,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="ticket">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
@@ -168,7 +168,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="settings">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
@@ -202,7 +202,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('brand.index') }}" class="nav-link">
+                            <a href="{{ route('payment.gateway') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Payment Gateway</p>
                             </a>

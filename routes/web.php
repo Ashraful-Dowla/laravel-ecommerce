@@ -76,4 +76,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     //order track
     Route::get('/order/track/', 'IndexController@order_tracking')->name('order.tracking');
     Route::post('/order/track/check', 'IndexController@order_check')->name('order.check');
+
+    //payment gateway
+    Route::post('/success', 'CheckoutController@success')->name('success');
+    Route::post('/fail', 'CheckoutController@fail')->name('fail');
+    Route::get('/cancel/{id}', 'CheckoutController@cancel')->name('cancel');
 });

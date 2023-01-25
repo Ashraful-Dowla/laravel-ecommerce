@@ -135,6 +135,12 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
             Route::post('/update/{id}', 'SettingController@websiteUpdate')->name('website.setting.update');
         });
 
+        //payment
+        Route::group(['prefix' => 'payment'], function () {
+            Route::get('/', 'SettingController@payment_gateway')->name('payment.gateway');
+            Route::post('/update/{id}', 'SettingController@payment_gateway_update')->name('payment.gateway.update');
+        });
+
         //page
         Route::group(['prefix' => 'page'], function () {
             Route::get('/', 'PageController@index')->name('page.index');

@@ -10,14 +10,14 @@
 
 <body>
     <h1>Succesfully Order Placed</h1>
-    <strong>Order Id(Tracking Id): {{ $order['order_id'] }} </strong><br/>
-    <strong>Order Date: {{ $order['date'] }} </strong><br/>
-    <strong>Total Amount: {{ $order['total'] }} </strong><br/>
-    <strong>Total Amount(after discount): {{ $order['after_discount'] }} </strong><br/>
+    <strong>Order Id(Tracking Id): {{ $order['order_id'] }} </strong><br />
+    <strong>Order Date: {{ $order['date'] }} </strong><br />
+    <strong>Total Amount: {{ $order['total'] }} </strong><br />
+    <strong>Total Amount(after discount): {{ $order['after_discount'] }} </strong><br />
     <hr>
-    <strong>Name: {{ $order['c_name'] }} </strong><br/>
-    <strong>Phone: {{ $order['c_phone'] }} </strong><br/>
-    <strong>Address: {{ $order['c_address'] }} </strong><br/>
+    <strong>Name: {{ $order['c_name'] }} </strong><br />
+    <strong>Phone: {{ $order['c_phone'] }} </strong><br />
+    <strong>Address: {{ $order['c_address'] }} </strong><br />
 </body>
 
 </html>

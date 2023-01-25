@@ -17,7 +17,7 @@
                     <div class="cart_container">
                         <div class="cart_title">Billing Address</div>
                         <div class="cart_items">
-                            <form action="{{ route('order.place') }}" method="POST" id="billing_form">
+                            <form action="{{ route('order.place') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group col-lg-6">
@@ -112,20 +112,18 @@
                                     <div class="form-group col-lg-12">
                                         <h3>Select Payment Type </h3>
                                     </div>
-                                    <div class="form-group col-lg-4">
+                                    {{-- <div class="form-group col-lg-4">
                                         <label for="payment_type">Paypal</label>
-                                        <input type="radio" class="form-control @error('c_name') is-invalid @enderror" F
-                                            name="payment_type" checked value="Paypal">
-                                    </div>
+                                        <input type="radio" class="form-control" name="payment_type" checked
+                                            value="Paypal">
+                                    </div> --}}
                                     <div class="form-group col-lg-4">
-                                        <label for="payment_type">SSL Commerz</label>
-                                        <input type="radio" class="form-control @error('c_name') is-invalid @enderror" F
-                                            name="payment_type" value="SSL Commerz">
+                                        <label for="payment_type">Bkash/Nagad/Rocket</label>
+                                        <input type="radio" class="form-control" name="payment_type" value="Aamarpay">
                                     </div>
                                     <div class="form-group col-lg-4">
                                         <label for="payment_type">Cash</label>
-                                        <input type="radio" class="form-control @error('c_name') is-invalid @enderror" F
-                                            name="payment_type" value="Cash">
+                                        <input type="radio" class="form-control" name="payment_type" value="Cash" checked>
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <button type="submit" class="btn btn-info">Order Place</button>
@@ -206,29 +204,29 @@
             })
         }
 
-        $("#billing_form").submit(function(e) {
-            e.preventDefault();
-            let url = $(this).attr('action');
-            let request = $(this).serialize();
+        // $("#billing_form").submit(function(e) {
+        //     e.preventDefault();
+        //     let url = $(this).attr('action');
+        //     let request = $(this).serialize();
 
-            $("button[type=submit]").attr('disabled', true);
+        //     $("button[type=submit]").attr('disabled', true);
 
-            $.ajax({
-                type: "POST",
-                url: url,
-                async: false,
-                data: request,
-                success: function(data) {
-                    toastr.success(data);
-                    $("#billing_form")[0].reset();
-                    $("button[type=submit]").attr('disabled', false);
-                    window.location.reload();
-                },
-                error: function(error) {
-                    $("button[type=submit]").attr('disabled', false);
-                    toastr.error(error.responseJSON.message);
-                }
-            });
+        //     $.ajax({
+        //         type: "POST",
+        //         url: url,
+        //         async: false,
+        //         data: request,
+        //         success: function(data) {
+        //             toastr.success(data);
+        //             $("#billing_form")[0].reset();
+        //             $("button[type=submit]").attr('disabled', false);
+        //             window.location.reload();
+        //         },
+        //         error: function(error) {
+        //             $("button[type=submit]").attr('disabled', false);
+        //             toastr.error(error.responseJSON.message);
+        //         }
+        //     });
         });
     </script>
 @endpush

@@ -516,7 +516,7 @@
                                                                 </div>
                                                                 <button class="product_cart_button" data-toggle="modal"
                                                                     data-target="#quickViewProductModal"
-                                                                    onclick="getProductById(`{{ $row->id }}`)">Add to
+                                                                    onclick="getProductById(`{{ $product->id }}`)">Add to
                                                                     Cart</button>
                                                             </div>
                                                         </div>

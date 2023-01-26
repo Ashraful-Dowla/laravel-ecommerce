@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Campaign;
 use App\Models\Category;
 use App\Models\Childcategory;
 use App\Models\Product;
@@ -34,9 +35,13 @@ class IndexController extends Controller
 
         $website_reviews = DB::table('website_reviews')->where('website_review_status', 1)->orderBy('id', 'desc')->limit(12)->get();
 
+        $campaign = Campaign::where('campaign_status', 1)->orderBy('id', 'desc')->first();
+
         return view('frontend.index', compact('categories', 'banner_product',
             'featured_products', 'wishlist_count', 'popular_products',
-            'trendy_products', 'home_category', 'brands', 'random_products', 'today_deal_products', 'website_reviews'));
+            'trendy_products', 'home_category', 'brands', 'random_products', 'today_deal_products', 'website_reviews',
+            'campaign'
+        ));
     }
 
     // single product view

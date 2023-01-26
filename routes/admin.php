@@ -94,6 +94,16 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update/{id}', 'CampaignController@update')->name('campaign.update');
     });
 
+     //order
+     Route::group(['prefix' => 'order'], function () {
+        Route::get('/', 'OrderController@index')->name('order.index');
+        Route::get('/list', 'OrderController@list')->name('order.list');
+        // Route::post('/store', 'CampaignController@store')->name('campaign.store');
+        // Route::delete('/delete/{id}', 'CampaignController@destroy')->name('campaign.delete');
+        // Route::get('/edit/{id}', 'CampaignController@edit')->name('campaign.edit');
+        // Route::post('/update/{id}', 'CampaignController@update')->name('campaign.update');
+    });
+
     //pickupoint
     Route::group(['prefix' => 'pickup-point'], function () {
         Route::get('/', 'PickupController@index')->name('pickup.point.index');

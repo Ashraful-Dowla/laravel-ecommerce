@@ -43,13 +43,12 @@
                         <div class="col d-flex flex-row">
                             <div class="top_bar_contact_item">
                                 <div class="top_bar_icon"><img src="{{ asset('public/frontend') }}/images/phone.png"
-                                        alt=""></div>+38 068 005
-                                3570
+                                        alt=""></div>{{ $setting->phone_one }}
                             </div>
                             <div class="top_bar_contact_item">
                                 <div class="top_bar_icon"><img src="{{ asset('public/frontend') }}/images/mail.png"
                                         alt=""></div><a
-                                    href="mailto:ecommerce@gmail.com">ecommerce@gmail.com</a>
+                                    href="mailto:{{ $setting->main_email }}">{{ $setting->main_email }}</a>
                             </div>
                             <div class="top_bar_content ml-auto">
                                 <div class="top_bar_menu">
@@ -210,7 +209,7 @@
                                 <div class="logo"><a href="#">{{ config('app.name') }}</a></div>
                             </div>
                             <div class="footer_title">Got Question? Call Us 24/7</div>
-                            <div class="footer_phone">+38 068 005 3570</div>
+                            <div class="footer_phone">{{ $setting->phone_one }}</div>
                             <div class="footer_contact_text">
                                 <p>17 Princess Road, London</p>
                                 <p>Grester London NW18JR, UK</p>

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ReceivedMail;
 use App\Models\Order;
 use DataTables;
+use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use View;
 
 class OrderController extends Controller
@@ -27,7 +30,7 @@ class OrderController extends Controller
 
             $status = $request->status;
             $date = $request->date;
-            $payment_type =$request->payment_type;
+            $payment_type = $request->payment_type;
 
             $orders = Order::when($status != null, function ($query) use ($status) {
                 return $query->where('status', $status);
@@ -44,11 +47,65 @@ class OrderController extends Controller
                     return View::make('admin.order.order_status', compact('order_status'));
                 })
                 ->addColumn('action', function ($row) {
-                    $actionBtn = View::make('admin.product.action', compact('row'));
+                    $actionBtn = View::make('admin.order.action', compact('row'));
                     return $actionBtn;
                 })
                 ->rawColumns(['action', 'status'])
                 ->make(true);
         }
+    }
+
+    public function edit($id)
+    {
+        $order = Order::where('id', $id)->first();
+        return view('admin.order.edit', compact('order'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        Order::where('id', $id)->update([
+            'c_name' => $request->c_name,
+            'c_email' => $request->c_email,
+            'c_address' => $request->c_address,
+            'c_phone' => $request->c_phone,
+            'status' => $request->status,
+        ]);
+
+        if ($request->status == 1) {
+            Mail::to($request->c_email)->send(new ReceivedMail());
+        }
+
+        return response()->json('Order successfully updated');
+    }
+
+    public function view($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $order_details = DB::table('order_details')->where('order_id', $id)->get();
+
+        return view('admin.order.order_details', compact('order', 'order_details'));
+    }
+
+    public function details_update(Request $request, $id)
+    {
+        $query = Order::where('id', $id);
+        $order = $query->first();
+
+        $query->update([
+            'status' => $request->status,
+        ]);
+
+        if ($request->status == 1) {
+            Mail::to($order->c_email)->send(new ReceivedMail());
+        }
+
+        return response()->json('Order successfully updated');
+    }
+
+    public function destroy($id)
+    {
+        Order::where('id', $id)->delete();
+        DB::table('order_details')->where('order_id', $id)->delete();
+        return response()->json('Order successfully deleted');
     }
 }

@@ -86,6 +86,36 @@
         <!-- /.content -->
     </div>
 
+    {{-- order edit model --}}
+    <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOrderModal">Edit Order</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modal_body"></div>
+            </div>
+        </div>
+    </div>
+
+    {{-- order edit model --}}
+    <div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewOrderModal">View Order</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="view_modal_body"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- script -->
     @push('script')
         <script type="text/javascript">
@@ -154,30 +184,34 @@
             })
         </script>
         <script>
-            // status ->  featured, today deal, status
-            function productStatus(type, id, value) {
-                let url = "{{ route('product.statusChange', ':id') }}";
+            function getOrderById(id) {
+                let url = "{{ route('order.edit', ':id') }}";
                 url = url.replace(':id', id);
+
                 $.ajax({
-                    type: "POST",
-                    async: false,
+                    type: "GET",
                     url: url,
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    data: {
-                        type: type,
-                        value: value
-                    },
                     success: function(data) {
-                        toastr.success(data);
-                        table.ajax.reload();
+                        $("#modal_body").html(data);
                     }
-                })
+                });
             }
 
-            function deleteProductById(id) {
-                let url = "{{ route('product.delete', ':id') }}";
+            function getViewOrderById(id) {
+                let url = "{{ route('order.view', ':id') }}";
+                url = url.replace(':id', id);
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function(data) {
+                        $("#view_modal_body").html(data);
+                    }
+                });
+            }
+
+               function deleteOrderById(id) {
+                let url = "{{ route('order.delete', ':id') }}";
                 url = url.replace(':id', id);
 
                 swal({
@@ -199,7 +233,7 @@
                                 success: function(data) {
                                     toastr.success(data);
                                     table.ajax.reload();
-                                    $("#delete_product")[0].reset();
+                                    $("#delete_order")[0].reset();
                                 }
                             })
                         } else {

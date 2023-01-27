@@ -254,9 +254,9 @@ exit;
             ]);
         }
 
-        $order_data = DB::table('orders')->where('id', $order_id)->update([
-            'status' => 1,
-        ]);
+        // $order_data = DB::table('orders')->where('id', $order_id)->update([
+        //     'status' => 1,
+        // ]);
 
         Cart::destroy();
 

@@ -94,14 +94,15 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update/{id}', 'CampaignController@update')->name('campaign.update');
     });
 
-     //order
-     Route::group(['prefix' => 'order'], function () {
+    //order
+    Route::group(['prefix' => 'order'], function () {
         Route::get('/', 'OrderController@index')->name('order.index');
         Route::get('/list', 'OrderController@list')->name('order.list');
-        // Route::post('/store', 'CampaignController@store')->name('campaign.store');
-        // Route::delete('/delete/{id}', 'CampaignController@destroy')->name('campaign.delete');
-        // Route::get('/edit/{id}', 'CampaignController@edit')->name('campaign.edit');
-        // Route::post('/update/{id}', 'CampaignController@update')->name('campaign.update');
+        Route::get('/edit/{id}', 'OrderController@edit')->name('order.edit');
+        Route::post('/update/{id}', 'OrderController@update')->name('order.update');
+        Route::get('/view/{id}', 'OrderController@view')->name('order.view');
+        Route::post('/details/update/{id}', 'OrderController@details_update')->name('order.details.update');
+        Route::delete('/delete/{id}', 'OrderController@destroy')->name('order.delete');
     });
 
     //pickupoint

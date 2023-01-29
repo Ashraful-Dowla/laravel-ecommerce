@@ -162,4 +162,13 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
             Route::post('/update/{id}', 'PageController@update')->name('page.update');
         });
     });
+
+    //blog
+    Route::group(['prefix' => 'blog/category'], function () {
+        Route::get('/', 'BlogController@index')->name('blog.category.index');
+        Route::post('/store', 'BlogController@store')->name('blog.category.store');
+        Route::get('/delete/{id}', 'BlogController@destroy')->name('blog.category.delete');
+        Route::get('/edit/{id}', 'BlogController@edit')->name('blog.category.edit');
+        Route::post('/update', 'BlogController@update')->name('blog.category.update');
+    });
 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentGatewawyBdTable extends Migration
+class CreateBlogCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePaymentGatewawyBdTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_gateway_bd', function (Blueprint $table) {
+        Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('gateway_name')->nullable();
-            $table->string('store_id')->nullable();
-            $table->string('signature_key')->nullable();
-            $table->integer('status')->default(0);
+            $table->string('blog_category_name')->nullable();
+            $table->string('blog_category_slug')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePaymentGatewawyBdTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_gatewawy_bd');
+        Schema::dropIfExists('blog_categories');
     }
 }

@@ -6,10 +6,10 @@
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="#" class="h1"><b>Admin</b>LTE</a>
+                    <a href="#" class="h1">{{ config('app.name') }}</a>
                 </div>
                 <div class="card-body">
-                    <p class="login-box-msg">Admin Login Panel</p>
+                    <p class="login-box-msg h3"><b>Admin Login</b></p>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="input-group mb-3">

@@ -160,4 +160,32 @@ class IndexController extends Controller
 
     }
 
+    //contact us
+    public function contact_us()
+    {
+        return view('frontend.contact_us');
+    }
+
+    public function contact_us_store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'message' => 'required',
+        ]);
+
+        DB::table('contacts')->insert([
+            'name' => $request->email,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->message,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $notification = array('message' => "Thanks for the message. Our support team will get back!", 'alert_type' => 'success');
+        return back()->with($notification);
+    }
+
 }

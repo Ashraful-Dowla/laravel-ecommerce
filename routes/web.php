@@ -81,6 +81,10 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     Route::post('/success', 'CheckoutController@success')->name('success');
     Route::post('/fail', 'CheckoutController@fail')->name('fail');
     Route::get('/cancel/{id}', 'CheckoutController@cancel')->name('cancel');
+
+    //contact us
+    Route::get('/contact-us', 'IndexController@contact_us')->name('contact.us');
+    Route::get('/contact-us/store', 'IndexController@contact_us_store')->name('contact.us.store');
 });
 
 //socialite

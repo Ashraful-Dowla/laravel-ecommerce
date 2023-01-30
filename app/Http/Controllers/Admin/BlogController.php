@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use DB;
+use App\Models\Blog;
+use App\Models\BlogCategory;
+use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -16,7 +18,7 @@ class BlogController extends Controller
 
     public function index()
     {
-        $blog_categories = DB::table('blog_categories')->get();
+        $blog_categories = BlogCategory::all();
         return view('admin.blog.category.index', compact('blog_categories'));
     }
 
@@ -29,9 +31,11 @@ class BlogController extends Controller
             'blog_category_slug' => 'unique:blog_categories|max:255',
         ]);
 
-        DB::table('blog_categories')->insert([
+        BlogCategory::insert([
             'blog_category_name' => $request->blog_category_name,
             'blog_category_slug' => $request->blog_category_slug,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         $notification = array('message' => 'Blog Category Inserted', 'alert_type' => 'success');
@@ -41,7 +45,7 @@ class BlogController extends Controller
     //blog category edit
     public function edit($id)
     {
-        $data = DB::table('blog_categories')->where('id', $id)->first();
+        $data = BlogCategory::where('id', $id)->first();
         return response()->json($data);
     }
 
@@ -54,7 +58,7 @@ class BlogController extends Controller
             'blog_category_slug' => 'max:255|unique:blog_categories,blog_category_slug,' . $request->id,
         ]);
 
-        DB::table('blog_categories')->where('id', $request->id)->update([
+        BlogCategory::where('id', $request->id)->update([
             'blog_category_name' => $request->blog_category_name,
             'blog_category_slug' => $request->blog_category_slug,
             'updated_at' => now(),
@@ -64,11 +68,36 @@ class BlogController extends Controller
         return back()->with($notification);
     }
 
-     //blog category delete
-     public function destroy($id)
-     {
-         DB::table('blog_categories')->where('id', $id)->delete();
-         $notification = array('message' => 'Blog Category Deleted', 'alert_type' => 'success');
-         return back()->with($notification);
-     }
+    //blog category delete
+    public function destroy($id)
+    {
+        BlogCategory::where('id', $id)->delete();
+        $notification = array('message' => 'Blog Category Deleted', 'alert_type' => 'success');
+        return back()->with($notification);
+    }
+
+    //blog
+    public function blog_index()
+    {
+        return view('admin.blog.index');
+    }
+
+    // blog data loaded by yajra datatable
+    function list(Request $request) {
+        if ($request->ajax()) {
+            $blogs = Blog::all();
+
+            return DataTables::of($blogs)
+                ->addIndexColumn()
+                ->editColumn('blog_category_name', function ($row) {
+                    return $row->blog_category->blog_category_name;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = View::make('admin.category.brand.action', compact('row'));
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
 }

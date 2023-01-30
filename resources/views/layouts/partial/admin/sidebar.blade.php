@@ -167,7 +167,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('order.index') }}" class="nav-link">
+                            <a href="{{ route('blog.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Blog</p>
                             </a>
@@ -218,7 +218,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('ticket.index') }}" class="nav-link">
+                            <a href="{{ route('contact.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Messages</p>
                             </a>

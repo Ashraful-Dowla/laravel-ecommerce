@@ -180,7 +180,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/store', 'BlogController@blog_store')->name('blog.store');
         Route::get('/delete/{id}', 'BlogController@blog_destroy')->name('blog.delete');
         Route::get('/edit/{id}', 'BlogController@blog_edit')->name('blog.edit');
-        Route::post('/update', 'BlogController@blog_update')->name('blog.update');
+        Route::post('/update/{id}', 'BlogController@blog_update')->name('blog.update');
     });
 
     //contact

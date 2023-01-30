@@ -2,6 +2,18 @@
 
 @push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.6.0/bootstrap-tagsinput.css" />
+    <style type="text/css">
+        .bootstrap-tagsinput .tag {
+            background: #428bca;
+            border: 1px solid white;
+            padding: 1 6px;
+            padding-left: 2px;
+            margin-right: 2px;
+            color: white;
+            border-radius: 4px;
+        }
+    </style>
 @endpush
 
 @section('admin_content')
@@ -43,7 +55,7 @@
                                             <th>Title</th>
                                             <th>Date</th>
                                             <th>Description</th>
-                                            <th>Logo</th>
+                                            <th>Thumbnail</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -78,17 +90,37 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="brand_name">Brand Name</label>
-                            <input type="text" class="form-control" name="brand_name" value="{{ old('brand_name') }}"
-                                required>
+                            <label for="title">Category</label>
+                            <select name="blog_category_id" class="form-control">
+                                @foreach ($blog_categories as $row)
+                                    <option value="{{ $row->id }}">{{ $row->blog_category_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="brand_logo">Brand Logo</label>
-                            <input type="file" class="dropify" name="brand_logo" required>
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" name="title" required>
                         </div>
                         <div class="form-group">
-                            <label for="front_page">Home Page</label>
-                            <select name="front_page" class="form-control">
+                            <label for="published_date">Date</label>
+                            <input type="date" class="form-control" name="published_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Tags</label><br>
+                            <input type="text" name="tags" class="form-control tag" data-role="tagsinput"
+                                style="min-width: 100%;">
+                        </div>
+                        <div class="form-group">
+                            <label for="thumbnail">Thumbnail</label>
+                            <input type="file" class="dropify" name="thumbnail">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select name="status" class="form-control">
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
@@ -108,7 +140,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="categoryModal">Edit Brand</h5>
+                    <h5 class="modal-title" id="categoryModal">Edit Blog</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -121,6 +153,7 @@
     <!-- script -->
     @push('script')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+        <script src="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
         <script type="text/javascript">
             $(function() {
                 var table = $(".ytable").DataTable({
@@ -140,7 +173,7 @@
                             name: "title"
                         },
                         {
-                            data: "date",
+                            data: "published_date",
                             name: "date"
                         },
                         {
@@ -148,8 +181,8 @@
                             name: "description"
                         },
                         {
-                            data: "logo",
-                            name: "logo",
+                            data: "thumbnail",
+                            name: "thumbnail",
                             render: function(data, type, full, meta) {
                                 return `<img src=${data} height="40">`;
                             }
@@ -174,8 +207,8 @@
             });
         </script>
         <script>
-            function getBrandById(id) {
-                let url = "{{ route('brand.edit', ':id') }}";
+            function getBlogById(id) {
+                let url = "{{ route('blog.edit', ':id') }}";
                 url = url.replace(':id', id);
                 $.ajax({
                     type: "GET",

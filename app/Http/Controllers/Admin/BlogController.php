@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use DataTables;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Image;
+use View;
 
 class BlogController extends Controller
 {
@@ -79,7 +82,8 @@ class BlogController extends Controller
     //blog
     public function blog_index()
     {
-        return view('admin.blog.index');
+        $blog_categories = BlogCategory::all();
+        return view('admin.blog.index', compact('blog_categories'));
     }
 
     // blog data loaded by yajra datatable
@@ -93,11 +97,112 @@ class BlogController extends Controller
                     return $row->blog_category->blog_category_name;
                 })
                 ->addColumn('action', function ($row) {
-                    $actionBtn = View::make('admin.category.brand.action', compact('row'));
+                    $actionBtn = View::make('admin.blog.action', compact('row'));
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+    //blog store
+    public function blog_store(Request $request)
+    {
+        $request['slug'] = Str::slug($request->title, '-');
+        $request->validate([
+            'title' => 'required|max:100',
+            'slug' => 'max:255',
+            'thumbnail' => 'mimes:png,jpg,jpeg|max:10000',
+            'description' => 'required',
+            'status' => 'in:1,0',
+        ]);
+
+        // dd($request->all());
+
+        //image
+        $photo_file_path = null;
+        if ($request->thumbnail) {
+            $photo = $request->thumbnail;
+            $photoname = $request->slug . '.' . $photo->getClientOriginalExtension();
+            $photo_file_path = "public/files/blog/" . $photoname;
+            Image::make($photo)->resize(240, 120)->save($photo_file_path);
+        }
+
+        Blog::insert([
+            'blog_category_id' => $request->blog_category_id,
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'published_date' => $request->published_date,
+            'tags' => $request->tags,
+            'thumbnail' => $photo_file_path,
+            'status' => $request->status,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $notification = array('message' => 'Blog Created', 'alert_type' => 'success');
+        return back()->with($notification);
+    }
+
+    public function blog_edit($id)
+    {
+        $blog_categories = BlogCategory::all();
+        $blog = Blog::where('id', $id)->first();
+        return view('admin.blog.edit', compact('blog_categories', 'blog'));
+    }
+
+    public function blog_update(Request $request, $id)
+    {
+        $request['slug'] = Str::slug($request->title, '-');
+        $request->validate([
+            'title' => 'required|max:100',
+            'slug' => 'max:255',
+            'thumbnail' => 'mimes:png,jpg,jpeg|max:10000',
+            'description' => 'required',
+            'status' => 'in:1,0',
+        ]);
+
+        // dd($request->all());
+
+        $blog = Blog::where('id', $id)->first();
+        //image
+        $photo_file_path = $blog->thumbnail;
+        if ($request->thumbnail) {
+            if (File::exists($photo_file_path)) {
+                File::delete($photo_file_path);
+            }
+            $photo = $request->thumbnail;
+            $photoname = $request->slug . '.' . $photo->getClientOriginalExtension();
+            $photo_file_path = "public/files/blog/" . $photoname;
+            Image::make($photo)->resize(240, 120)->save($photo_file_path);
+        }
+
+        Blog::where('id', $id)->update([
+            'blog_category_id' => $request->blog_category_id,
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'published_date' => $request->published_date,
+            'tags' => $request->tags,
+            'thumbnail' => $photo_file_path,
+            'status' => $request->status,
+            'updated_at' => now(),
+        ]);
+
+        $notification = array('message' => 'Blog Updated', 'alert_type' => 'success');
+        return back()->with($notification);
+    }
+
+    public function blog_destroy($id)
+    {
+        $blog = Blog::where('id', $id)->first();
+        if ($blog->thumbnail && File::exists($blog->thumbnail)) {
+            File::delete($blog->thumbnail);
+        }
+
+        Blog::destroy($id);
+        $notification = array('message' => 'Blog Deleted', 'alert_type' => 'success');
+        return back()->with($notification);
     }
 }

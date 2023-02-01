@@ -172,7 +172,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update', 'BlogController@update')->name('blog.category.update');
     });
 
-
     //blog
     Route::group(['prefix' => 'blog'], function () {
         Route::get('/', 'BlogController@blog_index')->name('blog.index');
@@ -190,5 +189,12 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::delete('/delete/{id}', 'ContactController@destroy')->name('contact.delete');
         Route::get('/edit/{id}', 'ContactController@edit')->name('contact.edit');
         Route::post('/update/{id}', 'ContactController@update')->name('contact.update');
+    });
+
+    //report
+    Route::group(['prefix' => 'report/order'], function () {
+        Route::get('/', 'OrderController@report_index')->name('report.order.index');
+        Route::get('/list', 'OrderController@report_list')->name('report.order.list');
+        Route::get('/print', 'OrderController@report_print')->name('report.order.print');
     });
 });

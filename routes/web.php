@@ -85,6 +85,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
     //contact us
     Route::get('/contact-us', 'IndexController@contact_us')->name('contact.us');
     Route::get('/contact-us/store', 'IndexController@contact_us_store')->name('contact.us.store');
+
+    //blog
+    Route::get('/our-blog', 'IndexController@our_blog')->name('our.blog');
 });
 
 //socialite

@@ -55,12 +55,14 @@ class OrderController extends Controller
         }
     }
 
+    //order edit
     public function edit($id)
     {
         $order = Order::where('id', $id)->first();
         return view('admin.order.edit', compact('order'));
     }
 
+    //order update
     public function update(Request $request, $id)
     {
         Order::where('id', $id)->update([
@@ -78,6 +80,7 @@ class OrderController extends Controller
         return response()->json('Order successfully updated');
     }
 
+    //show order
     public function view($id)
     {
         $order = Order::where('id', $id)->first();
@@ -86,6 +89,7 @@ class OrderController extends Controller
         return view('admin.order.order_details', compact('order', 'order_details'));
     }
 
+    //order details update
     public function details_update(Request $request, $id)
     {
         $query = Order::where('id', $id);
@@ -102,10 +106,67 @@ class OrderController extends Controller
         return response()->json('Order successfully updated');
     }
 
+    //order delete
     public function destroy($id)
     {
         Order::where('id', $id)->delete();
         DB::table('order_details')->where('order_id', $id)->delete();
         return response()->json('Order successfully deleted');
+    }
+
+    //order report index
+    public function report_index()
+    {
+        return view('admin.report.order.index');
+    }
+
+    // order report data loaded by yajra datatable
+    public function report_list(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $status = $request->status;
+            $date = $request->date;
+            $payment_type = $request->payment_type;
+
+            $orders = Order::when($status != null, function ($query) use ($status) {
+                return $query->where('status', $status);
+            })->when($date != null, function ($query) use ($date) {
+                return $query->where('date', date('d-m-Y', strtotime($date)));
+            })->when($payment_type != null, function ($query) use ($payment_type) {
+                return $query->where('payment_type', $payment_type);
+            })->get();
+
+            return DataTables::of($orders)
+                ->addIndexColumn()
+                ->editColumn('status', function ($row) {
+                    $order_status = $row->status;
+                    return View::make('admin.order.order_status', compact('order_status'));
+                })
+                ->rawColumns(['status'])
+                ->make(true);
+        }
+    }
+
+    //order report print
+    public function report_print(Request $request)
+    {
+        $orders = Order::all();
+        if ($request->ajax()) {
+
+            $status = $request->status;
+            $date = $request->date;
+            $payment_type = $request->payment_type;
+
+            $orders = Order::when($status != null, function ($query) use ($status) {
+                return $query->where('status', $status);
+            })->when($date != null, function ($query) use ($date) {
+                return $query->where('date', date('d-m-Y', strtotime($date)));
+            })->when($payment_type != null, function ($query) use ($payment_type) {
+                return $query->where('payment_type', $payment_type);
+            })->get();
+        }
+
+        return view('admin.report.order.print', compact('orders'));
     }
 }

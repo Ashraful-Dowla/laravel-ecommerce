@@ -166,6 +166,7 @@ class IndexController extends Controller
         return view('frontend.contact_us');
     }
 
+    //contact us store
     public function contact_us_store(Request $request)
     {
         $request->validate([
@@ -186,6 +187,12 @@ class IndexController extends Controller
 
         $notification = array('message' => "Thanks for the message. Our support team will get back!", 'alert_type' => 'success');
         return back()->with($notification);
+    }
+
+    //our blog
+    public function our_blog()
+    {
+        return view('frontend.blog');
     }
 
 }

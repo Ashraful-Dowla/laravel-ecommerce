@@ -225,6 +225,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item" id="reports">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Reports
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('report.order.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Order Report</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item" id="settings">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
@@ -262,6 +279,29 @@
                             <a href="{{ route('payment.gateway') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Payment Gateway</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item" id="roles">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            User Role
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('seo.setting') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create New Role</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('website.setting') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage Role</p>
                             </a>
                         </li>
                     </ul>

@@ -58,7 +58,7 @@
                             <!-- general form elements -->
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Add New Product</h3>
+                                    <h3 class="card-title">Update Product</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -232,15 +232,17 @@
                         </div>
                         <!-- /.card -->
                         <!-- right column -->
-                        <div class="col-md-4">
+                        <div class="col-lg-4">
                             <!-- Form Element sizes -->
                             <div class="card card-primary">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Main Thumbnail <span class="text-danger">*</span>
-                                        </label><br>
-                                        <input type="file" name="product_thumbnail" required="" accept="image/*"
-                                            class="dropify">
+                                        <label for="exampleInputEmail1">Main Thumbnail</label><br>
+                                        <img alt="" src="{{ asset($product->product_thumbnail) }}"
+                                            style="width: 200px; height: 160px; padding: 10px;" />
+                                        <input type="file" name="product_thumbnail" accept="image/*" class="dropify">
+                                        <input type="hidden" name="old_product_thumbnail"
+                                            value="{{ $product->product_thumbnail }}">
                                     </div><br>
                                     <div class="">
                                         <table class="table table-bordered" id="dynamic_field">
@@ -253,6 +255,23 @@
                                                 <td><button type="button" name="add" id="add"
                                                         class="btn btn-success">Add</button></td>
                                             </tr>
+                                            @php
+                                                $images = json_decode($product->product_images, true);
+                                            @endphp
+                                            @if ($images)
+                                                <div class="row">
+                                                    @foreach ($images as $key => $image)
+                                                        <div class="col-md-4">
+                                                            <img alt="" src="{{ asset($image) }}"
+                                                                style="width: 100px; height: 80px; padding: 10px;" />
+                                                            <input type="hidden" name="old_product_images[]"
+                                                                value="{{ $image }}">
+                                                            <button type="button" class="remove-files"
+                                                                style="border: none;">X</button>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @endif
                                         </table>
                                     </div>
                                     <div class="card p-4">
@@ -276,11 +295,12 @@
                                             data-on-color="success">
                                     </div>
 
-                                    {{-- <div class="card p-4">
+                                    <div class="card p-4">
                                         <h6>Trendy Product</h6>
-                                        <input type="checkbox" name="product_trendy" value="1" data-bootstrap-switch
-                                            data-off-color="danger" data-on-color="success">
-                                    </div> --}}
+                                        <input type="checkbox" name="product_trendy" value="0" data-bootstrap-switch
+                                            {{ $product->product_slider == 1 ? 'checked' : null }} data-off-color="danger"
+                                            data-on-color="success">
+                                    </div>
 
                                     <div class="card p-4">
                                         <h6>Status</h6>
@@ -314,6 +334,7 @@
             $("input[data-bootstrap-switch]").each(function() {
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
             });
+
             $(function() {
                 var postURL = "<?php echo url('addmore'); ?>";
                 var i = 1;
@@ -327,6 +348,12 @@
                     var button_id = $(this).attr("id");
                     $('#row' + button_id + '').remove();
                 });
+
+                //edit product imahe remove by cros btn
+                $('.remove-files').on('click', function() {
+                    $(this).parents(".col-md-4").remove();
+                });
+
             });
 
             function getChildCategoryBySubCategoryId(object) {

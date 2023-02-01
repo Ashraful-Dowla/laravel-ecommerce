@@ -197,7 +197,86 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'subcategory_id' => 'required|exists:subcategories,id',
+            'childcategory_id' => 'required|exists:childcategories,id',
+            'brand_id' => 'exists:brands,id',
+            'pickup_point_id' => 'required|exists:pickup_point,id',
+            'product_name' => 'required|max:255',
+            'product_code' => 'required|max:255',
+            'product_unit' => 'required|min:1',
+            'product_selling_price' => 'required|min:1',
+            'product_description' => 'required',
+            'product_thumbnail' => 'mimes:jpeg,jpg,png,gif|max:1000',
+            'product_images.*' => 'mimes:jpeg,jpg,png,gif|max:1000',
+            'product_color' => 'required',
+            'warehouse_id' => 'exists:warehouses,id',
+        ]);
 
+        // dd($request->all());
+
+        $request['category_id'] = Subcategory::where('id', $request->subcategory_id)->first()->category_id;
+
+        $request['product_status'] = $request->has('product_status') ? 1 : 0;
+        $request['product_featured'] = $request->has('product_featured') ? 1 : 0;
+        $request['product_today_deal'] = $request->has('product_today_deal') ? 1 : 0;
+        $request['product_slider'] = $request->has('product_slider') ? 1 : 0;
+        $request['product_trendy'] = $request->has('product_trendy') ? 1 : 0;
+
+        $photo_product_thumbnail_path = $request->old_product_thumbnail;
+        if ($request->hasFile('product_thumbnail')) {
+            $photo_product_thumbnail_path = $this->productFileUpload($photo_product_thumbnail_path, $request->product_thumbnail, 600, 600);
+        }
+
+        $photo_product_image_paths = array();
+        if ($request->hasFile('product_images')) {
+            foreach ($request->file('product_images') as $key => $image) {
+                $upload_path = $this->productFileUpload(null, $image, 600, 600);
+                array_push($photo_product_image_paths, $upload_path);
+            }
+        }
+
+        foreach ($request->old_product_images as $key => $image) {
+            array_push($photo_product_image_paths, $image);
+        }
+
+        Product::where('id', $id)->update([
+            'category_id' => $request->category_id,
+            'subcategory_id' => $request->subcategory_id,
+            'childcategory_id' => $request->childcategory_id,
+            'brand_id' => $request->brand_id,
+            'pickup_point_id' => $request->pickup_point_id,
+            'admin_id' => Auth::user()->id,
+            'product_name' => $request->product_name,
+            'product_code' => $request->product_code,
+            'product_slug' => Str::slug($request->product_name, '-'),
+            'product_unit' => $request->product_unit,
+            'product_tags' => $request->product_tags,
+            'product_video' => $request->product_video,
+            'product_purchase_price' => $request->product_purchase_price,
+            'product_selling_price' => $request->product_selling_price,
+            'product_discount_price' => $request->product_discount_price,
+            'product_stock_quantity' => $request->product_stock_quantity,
+            'product_description' => $request->product_description,
+            'product_thumbnail' => $photo_product_thumbnail_path,
+            'product_images' => json_encode($photo_product_image_paths),
+            'product_featured' => $request->product_featured,
+            'product_status' => $request->product_status,
+            'product_today_deal' => $request->product_today_deal,
+            'product_cash_on_delivery' => $request->product_cash_on_delivery,
+            'product_color' => $request->product_color,
+            'product_size' => $request->product_size,
+            'product_slider' => $request->product_slider,
+            'flash_deal_id' => $request->flash_deal_id,
+            'warehouse_id' => $request->warehouse_id,
+            'date' => date('d-m-Y'),
+            'month' => date('F'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $notification = array('message' => 'Product Updated', 'alert_type' => 'success');
+        return redirect()->route('product.index')->with($notification);
     }
 
     //product delete

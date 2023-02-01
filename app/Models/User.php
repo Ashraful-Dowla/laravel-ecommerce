@@ -26,6 +26,18 @@ class User extends Authenticatable
         'provider',
         'provider_id',
         'access_token',
+        'role_admin',
+        'category',
+        'product',
+        'offer',
+        'order',
+        'blog',
+        'pickup',
+        'ticket',
+        'contact',
+        'report',
+        'setting',
+        'user_role',
     ];
 
     /**

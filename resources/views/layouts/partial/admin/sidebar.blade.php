@@ -90,7 +90,7 @@
                 </li>
                 <li class="nav-item" id="product">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-table"></i>
                         <p>
                             Product
                             <i class="fas fa-angle-left right"></i>
@@ -113,7 +113,7 @@
                 </li>
                 <li class="nav-item" id="offer">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-tree"></i>
                         <p>
                             Offer
                             <i class="fas fa-angle-left right"></i>
@@ -136,7 +136,7 @@
                 </li>
                 <li class="nav-item" id="order">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-columns"></i>
                         <p>
                             Orders
                             <i class="fas fa-angle-left right"></i>
@@ -210,7 +210,7 @@
                 </li>
                 <li class="nav-item" id="contact">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon far fa-envelope"></i>
                         <p>
                             Contact Message
                             <i class="fas fa-angle-left right"></i>
@@ -227,7 +227,7 @@
                 </li>
                 <li class="nav-item" id="reports">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
                             Reports
                             <i class="fas fa-angle-left right"></i>
@@ -285,7 +285,7 @@
                 </li>
                 <li class="nav-item" id="roles">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-user"></i>
                         <p>
                             User Role
                             <i class="fas fa-angle-left right"></i>
@@ -293,13 +293,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('seo.setting') }}" class="nav-link">
+                            <a href="{{ route('role.create') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Create New Role</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('website.setting') }}" class="nav-link">
+                            <a href="{{ route('role.manage') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Manage Role</p>
                             </a>

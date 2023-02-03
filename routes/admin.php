@@ -5,13 +5,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin-login', [App\Http\Controllers\Auth\LoginController::class, 'adminLogin'])->name('admin.login');
 
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_admin'], function () {
-    Route::get('/admin/home', "AdminController@admin")->name('admin.home');
-    Route::get('/admin/password/change', "AdminController@passwordChange")->name('admin.password.change');
-    Route::post('/admin/password/update', "AdminController@passwordUpdate")->name('admin.password.update');
-    Route::get('/admin/logout', "AdminController@logout")->name('admin.logout');
+
+    Route::group(['prefix' => 'admin', 'role' => 'admin'], function () {
+        Route::get('/home', "AdminController@admin")->name('admin.home');
+        Route::get('/password/change', "AdminController@passwordChange")->name('admin.password.change');
+        Route::post('/password/update', "AdminController@passwordUpdate")->name('admin.password.update');
+        Route::get('/logout', "AdminController@logout")->name('admin.logout');
+    });
 
     //category
-    Route::group(['prefix' => 'category'], function () {
+    Route::group(['prefix' => 'category', 'role' => 'category'], function () {
         Route::get('/', 'CategoryController@index')->name('category.index');
         Route::post('/store', 'CategoryController@store')->name('category.store');
         Route::get('/delete/{id}', 'CategoryController@destroy')->name('category.delete');
@@ -20,7 +23,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //subcategory
-    Route::group(['prefix' => 'subcategory'], function () {
+    Route::group(['prefix' => 'subcategory', 'role' => 'category'], function () {
         Route::get('/', 'SubcategoryController@index')->name('subcategory.index');
         Route::post('/store', 'SubcategoryController@store')->name('subcategory.store');
         Route::get('/delete/{id}', 'SubcategoryController@destroy')->name('subcategory.delete');
@@ -29,7 +32,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //childcategory
-    Route::group(['prefix' => 'childcategory'], function () {
+    Route::group(['prefix' => 'childcategory', 'role' => 'category'], function () {
         Route::get('/', 'ChildcategoryController@index')->name('childcategory.index');
         Route::get('/list', 'ChildcategoryController@list')->name('childcategory.list');
         Route::post('/store', 'ChildcategoryController@store')->name('childcategory.store');
@@ -43,7 +46,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //brand
-    Route::group(['prefix' => 'brand'], function () {
+    Route::group(['prefix' => 'brand', 'role' => 'category'], function () {
         Route::get('/', 'BrandController@index')->name('brand.index');
         Route::get('/list', 'BrandController@list')->name('brand.list');
         Route::post('/store', 'BrandController@store')->name('brand.store');
@@ -53,7 +56,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //warehouse
-    Route::group(['prefix' => 'warehouse'], function () {
+    Route::group(['prefix' => 'warehouse', 'role' => 'category'], function () {
         Route::get('/', 'WarehouseController@index')->name('warehouse.index');
         Route::get('/list', 'WarehouseController@list')->name('warehouse.list');
         Route::post('/store', 'WarehouseController@store')->name('warehouse.store');
@@ -63,7 +66,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //product
-    Route::group(['prefix' => 'product'], function () {
+    Route::group(['prefix' => 'product', 'role' => 'product'], function () {
         Route::get('/', 'ProductController@index')->name('product.index');
         Route::get('/list', 'ProductController@list')->name('product.list');
         Route::get('/create', 'ProductController@create')->name('product.create');
@@ -75,7 +78,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //coupon
-    Route::group(['prefix' => 'coupon'], function () {
+    Route::group(['prefix' => 'coupon', 'role' => 'offer'], function () {
         Route::get('/', 'CouponController@index')->name('coupon.index');
         Route::get('/list', 'CouponController@list')->name('coupon.list');
         Route::post('/store', 'CouponController@store')->name('coupon.store');
@@ -85,7 +88,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //campaign
-    Route::group(['prefix' => 'campaign'], function () {
+    Route::group(['prefix' => 'campaign', 'role' => 'offer'], function () {
         Route::get('/', 'CampaignController@index')->name('campaign.index');
         Route::get('/list', 'CampaignController@list')->name('campaign.list');
         Route::post('/store', 'CampaignController@store')->name('campaign.store');
@@ -95,7 +98,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //order
-    Route::group(['prefix' => 'order'], function () {
+    Route::group(['prefix' => 'order', 'role' => 'order'], function () {
         Route::get('/', 'OrderController@index')->name('order.index');
         Route::get('/list', 'OrderController@list')->name('order.list');
         Route::get('/edit/{id}', 'OrderController@edit')->name('order.edit');
@@ -106,7 +109,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //pickupoint
-    Route::group(['prefix' => 'pickup-point'], function () {
+    Route::group(['prefix' => 'pickup-point', 'pickup'], function () {
         Route::get('/', 'PickupController@index')->name('pickup.point.index');
         Route::get('/list', 'PickupController@list')->name('pickup.point.list');
         Route::post('/store', 'PickupController@store')->name('pickup.point.store');
@@ -116,7 +119,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //ticket
-    Route::group(['prefix' => 'ticket'], function () {
+    Route::group(['prefix' => 'ticket', 'role' => 'ticket'], function () {
         Route::get('/', 'TicketController@index')->name('ticket.index');
         Route::get('/list', 'TicketController@list')->name('ticket.list');
         Route::get('/view/{id}', 'TicketController@view')->name('ticket.view');
@@ -126,7 +129,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //setting
-    Route::group(['prefix' => 'setting'], function () {
+    Route::group(['prefix' => 'setting', 'role' => 'setting'], function () {
 
         //seo
         Route::group(['prefix' => 'seo'], function () {
@@ -164,7 +167,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //blog category
-    Route::group(['prefix' => 'blog/category'], function () {
+    Route::group(['prefix' => 'blog/category', 'role' => 'blog'], function () {
         Route::get('/', 'BlogController@index')->name('blog.category.index');
         Route::post('/store', 'BlogController@store')->name('blog.category.store');
         Route::get('/delete/{id}', 'BlogController@destroy')->name('blog.category.delete');
@@ -173,7 +176,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //blog
-    Route::group(['prefix' => 'blog'], function () {
+    Route::group(['prefix' => 'blog', 'role' => 'blog'], function () {
         Route::get('/', 'BlogController@blog_index')->name('blog.index');
         Route::get('/list', 'BlogController@list')->name('blog.list');
         Route::post('/store', 'BlogController@blog_store')->name('blog.store');
@@ -183,7 +186,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //contact
-    Route::group(['prefix' => 'contact'], function () {
+    Route::group(['prefix' => 'contact', 'role' => 'contact'], function () {
         Route::get('/', 'ContactController@index')->name('contact.index');
         Route::get('/list', 'ContactController@list')->name('contact.list');
         Route::delete('/delete/{id}', 'ContactController@destroy')->name('contact.delete');
@@ -192,14 +195,14 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     //report
-    Route::group(['prefix' => 'report/order'], function () {
+    Route::group(['prefix' => 'report/order', 'role' => 'report'], function () {
         Route::get('/', 'OrderController@report_index')->name('report.order.index');
         Route::get('/list', 'OrderController@report_list')->name('report.order.list');
         Route::get('/print', 'OrderController@report_print')->name('report.order.print');
     });
 
     //role
-    Route::group(['prefix' => 'role'], function () {
+    Route::group(['prefix' => 'role', 'role' => 'user_role'], function () {
         Route::get('/', 'RoleController@index')->name('role.manage');
         Route::get('/create', 'RoleController@create')->name('role.create');
         Route::post('/store', 'RoleController@store')->name('role.store');

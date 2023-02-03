@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class IsAdmin
+class IsNotAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,16 +17,10 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->is_admin == 1) {
-
-            $role = $request->route()->getAction()['role'];
-
-            if ($role == 'admin' || Auth::user()->$role) {
-                return $next($request);
-            }
-            return back()->with('error', 'Unauthorized');
+        if (Auth::user()->is_admin != 1) {
+            return $next($request);
         }
 
-        return redirect()->route('home')->with('error', 'You are not an admin');
+        return back()->with('error', 'You are not an user');
     }
 }

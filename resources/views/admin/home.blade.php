@@ -237,11 +237,15 @@
                                             @foreach ($customers as $customer)
                                                 <li>
                                                     @if ($customer->avatar)
-                                                        <img src="{{ asset($customer->avatar) }}" alt="User Image">
+                                                        <div style="margin: 20px 0px 15px 0px;">
+                                                            <img src="{{ asset($customer->avatar) }}" alt="User Image"
+                                                                style="height:120px;">
+                                                        </div>
                                                     @else
                                                         <img class="card-img-top"
                                                             src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg">
                                                     @endif
+
                                                     <a class="users-list-name" href="#">{{ $customer->name }}</a>
                                                     <span
                                                         class="users-list-date">{{ date('d F, Y', strtotime($customer->created_at)) }}</span>
@@ -336,48 +340,6 @@
                     <!-- /.col -->
 
                     <div class="col-md-4">
-                        <!-- Info Boxes Style 2 -->
-                        <div class="info-box mb-3 bg-warning">
-                            <span class="info-box-icon"><i class="fas fa-tag"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">Inventory</span>
-                                <span class="info-box-number">5,200</span>
-                            </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                        <div class="info-box mb-3 bg-success">
-                            <span class="info-box-icon"><i class="far fa-heart"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">Mentions</span>
-                                <span class="info-box-number">92,050</span>
-                            </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                        <div class="info-box mb-3 bg-danger">
-                            <span class="info-box-icon"><i class="fas fa-cloud-download-alt"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">Downloads</span>
-                                <span class="info-box-number">114,381</span>
-                            </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                        <div class="info-box mb-3 bg-info">
-                            <span class="info-box-icon"><i class="far fa-comment"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">Direct Messages</span>
-                                <span class="info-box-number">163,921</span>
-                            </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-
                         <!-- PRODUCT LIST -->
                         <div class="card">
                             <div class="card-header">

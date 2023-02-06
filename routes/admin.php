@@ -97,6 +97,14 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update/{id}', 'CampaignController@update')->name('campaign.update');
     });
 
+    //campaign product route
+    Route::group(['prefix' => 'campaign-product', 'role' => 'offer'], function () {
+        Route::get('/{campaign_id}', 'CampaignProductController@index')->name('campaign.product');
+        Route::get('/store/{product_id}/{campaign_id}', 'CampaignProductController@store')->name('campaign.product.store');
+        Route::get('/list/{campaign_id}', 'CampaignProductController@list')->name('campaign.product.list');
+        Route::get('/delete/{id}', 'CampaignProductController@destroy')->name('campaign.product.delete');
+    });
+
     //order
     Route::group(['prefix' => 'order', 'role' => 'order'], function () {
         Route::get('/', 'OrderController@index')->name('order.index');

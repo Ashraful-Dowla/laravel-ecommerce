@@ -4,6 +4,48 @@
     @push('front_css')
         <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/product_styles.css">
         <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend') }}/styles/product_responsive.css">
+        <style>
+            #social-links ul {
+                padding-left: 0;
+            }
+
+            #social-links ul li {
+                display: inline-block;
+            }
+
+            #social-links ul li a {
+                padding: 6px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin: 1px;
+                font-size: 25px;
+            }
+
+            #social-links .fa-facebook {
+                color: #0d6efd;
+            }
+
+            #social-links .fa-twitter {
+                color: deepskyblue;
+            }
+
+            #social-links .fa-linkedin {
+                color: #0e76a8;
+            }
+
+            #social-links .fa-whatsapp {
+                color: #25D366
+            }
+
+            #social-links .fa-reddit {
+                color: #FF4500;
+                ;
+            }
+
+            #social-links .fa-telegram {
+                color: #0088cc;
+            }
+        </style>
     @endpush
     @include('layouts.partial.front.collapse_navbar')
     @push('front_script')
@@ -131,6 +173,14 @@
                                     </form>
                                 </div>
                             </div>
+                            @php
+                                $shareButtons = \Share::page(url()->current())
+                                    ->facebook()
+                                    ->twitter()
+                                    ->linkedin()
+                                    ->whatsapp();
+                            @endphp
+                            {!! $shareButtons !!}
                         </div>
 
                         <div class="col-lg-3 order-3" style="border-left: 1px solid grey; padding-left: 10px;">
@@ -328,33 +378,34 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    @push('front_script')
-        <script>
-            $("#add_cart_form").submit(function(e) {
-                e.preventDefault();
-                let url = $(this).attr('action');
-                let request = $(this).serialize();
+            </div>
+            </div>
+            @push('front_script')
+                <script src="{{ asset('public/js/share.js') }}"></script>
+                <script>
+                    $("#add_cart_form").submit(function(e) {
+                        e.preventDefault();
+                        let url = $(this).attr('action');
+                        let request = $(this).serialize();
 
-                $("button[type=submit]").attr('disabled', true);
+                        $("button[type=submit]").attr('disabled', true);
 
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    async: false,
-                    data: request,
-                    success: function(data) {
-                        toastr.success(data);
-                        $("#add_cart_form")[0].reset();
-                        $("button[type=submit]").attr('disabled', false);
-                        cart();
-                    },
-                    error: function(error) {
-                        $("button[type=submit]").attr('disabled', false);
-                    }
-                });
-            });
-        </script>
-    @endpush
-@endsection
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            async: false,
+                            data: request,
+                            success: function(data) {
+                                toastr.success(data);
+                                $("#add_cart_form")[0].reset();
+                                $("button[type=submit]").attr('disabled', false);
+                                cart();
+                            },
+                            error: function(error) {
+                                $("button[type=submit]").attr('disabled', false);
+                            }
+                        });
+                    });
+                </script>
+            @endpush
+        @endsection

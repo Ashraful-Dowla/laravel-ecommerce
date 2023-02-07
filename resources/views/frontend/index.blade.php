@@ -35,19 +35,26 @@
 
 
     @isset($campaign)
-        <div class="characteristics">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-8">
-                        <strong style="text-align: center;">{{ $campaign->campaign_title }}</strong>
-                        <a href="#"> <img
-                                src="{{ $campaign->campaign_image }}" style="width:100%;"> </a>
-                    </div><br>
+        @php
+            $today = date('Y-m-d');
+            $end_date = $campaign->campaign_end_date;
+            $start_date = $campaign->campaign_start_date;
+        @endphp
+        @if ($today >= $start_date && $today <= $end_date)
+            <div class="characteristics">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <strong style="text-align: center;">{{ $campaign->campaign_title }}</strong>
+                            <a href="{{ route('frontend.campaign.products', $campaign->id) }}"> <img
+                                    src="{{ $campaign->campaign_image }}" style="width:100%;"> </a>
+                        </div><br>
 
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     @endisset
 
     <!-- Characteristics -->

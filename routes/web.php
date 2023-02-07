@@ -88,6 +88,11 @@ Route::group(['namespace' => 'App\Http\Controllers\Front'], function () {
 
     //blog
     Route::get('/our-blog', 'IndexController@our_blog')->name('our.blog');
+
+    //campaign products
+    Route::get('/campaign/products/{id}', 'IndexController@campaign_products')->name('frontend.campaign.products');
+    Route::get('/campaign/product-details/{campaign_id}/{slug}', 'IndexController@campaign_product_details')->name('frontend.campaign.product.details');
+
 });
 
 //socialite

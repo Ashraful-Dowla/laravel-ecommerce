@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\CampaignProduct;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
@@ -22,6 +23,14 @@ class CartController extends Controller
         $product = Product::where('id', $request->id)->first();
 
         $price = $product->product_discount_price == null ? $product->product_selling_price : $product->product_discount_price;
+
+        if ($request->has('campaign_id')) {
+            $campaign_product = CampaignProduct::where('campaign_id', $request->campaign_id)
+                ->where('product_id', $product->id)
+                ->first();
+
+            $price = $campaign_product->price;
+        }
 
         Cart::add([
             'id' => $product->id,
@@ -79,6 +88,5 @@ class CartController extends Controller
         $notification = array('message' => 'Cart Item cleared', 'alert_type' => 'success');
         return back()->with($notification);
     }
-
 
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Campaign;
+use App\Models\CampaignProduct;
 use App\Models\Category;
 use App\Models\Childcategory;
 use App\Models\Product;
@@ -54,7 +55,7 @@ class IndexController extends Controller
         $wishlist_count = Wishlist::where('user_id', Auth::id())->count();
 
         return view('frontend.product.product_details', compact('product', 'related_products',
-            'reviews', 'wishlist_count',));
+            'reviews', 'wishlist_count', ));
     }
 
     //product quick view
@@ -194,6 +195,26 @@ class IndexController extends Controller
     public function our_blog()
     {
         return view('frontend.blog');
+    }
+
+    //campaign products
+    public function campaign_products($id)
+    {
+        $campaign = Campaign::where('id', $id)->first();
+        return view('frontend.campaign.product_list', compact('campaign'));
+    }
+
+    //campaign product details
+    public function campaign_product_details($campaign_id, $slug)
+    {
+        Product::where('product_slug', $slug)->increment('product_views');
+        $product = Product::where('product_slug', $slug)->first();
+        $related_products = CampaignProduct::where('campaign_id', $campaign_id)->orderBy('id', 'desc')->inRandomOrder(12)->get();
+        $reviews = Review::where('product_id', $product->id)->orderBy('id', 'desc')->take(6)->get();
+        $campaign_product = CampaignProduct::where('campaign_id', $campaign_id)->where('product_id', $product->id)->first();
+
+        return view('frontend.campaign.product_details', compact('product', 'related_products',
+            'reviews', 'campaign_product'));
     }
 
 }

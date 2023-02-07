@@ -76,7 +76,7 @@ class CampaignController extends Controller
     //campaign edit
     public function edit($id)
     {
-        $campaign = Campaign::findOrFail($id);
+        $campaign = Campaign::where('id', $id)->first();
         return view('admin.offer.campaign.edit', compact('campaign'));
     }
 
